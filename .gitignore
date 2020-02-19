@@ -1,0 +1,17 @@
+.db
+.env
+.env.prod
+.env.staging
+.env.local
+.env.dev
+.env-prod
+.env-staging
+.env-local
+.env-dev
+node_modules
+components/routes/_*
+.sass-cache/*
+.DS_Store
+.vscode/
+*.pem
+ecosystem.config.js
