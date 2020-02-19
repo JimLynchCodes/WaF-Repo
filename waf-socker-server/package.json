@@ -1,0 +1,16 @@
+{
+  "name": "waf-socker-server",
+  "version": "0.0.1",
+  "description": "waf backend socket.io server",
+  "main": "app.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm test"
+  },
+  "author": "JimTheMan <mrdotjim@gmail.com> (http://www.wisdomofjim.com)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
