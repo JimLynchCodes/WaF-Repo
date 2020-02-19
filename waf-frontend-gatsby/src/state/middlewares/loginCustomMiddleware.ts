@@ -4,12 +4,12 @@ import { loginSuccess, loginFailed } from '../actions/login';
 import { MiddlewareAPI, AnyAction, Action } from 'redux';
 import { Dispatch } from 'react';
 
-export interface MiddlewareTodoParams<S> {
-  store: MiddlewareAPI<any>;
-  next: Dispatch<S>;
-  action: Action<S>;
-  [otherProperty: string]: {};
-}
+// export interface MiddlewareTodoParams<S> {
+//   store: MiddlewareAPI<any>;
+//   next: Dispatch<S>;
+//   action: Action<S>;
+//   [otherProperty: string]: {};
+// }
 
 const loginCustomMiddleware = () => {
   return (store: MiddlewareAPI<any>) => (next: Dispatch<any>) => async (action: AnyAction) => {

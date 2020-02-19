@@ -52,13 +52,13 @@ nvm use
 Install dependencies:
 
 ```
-npm i
+yarn install
 ```
 
 Run locally (with hot module reloading)
 
 ```
-npm run deploy
+yarn start
 ```
 
 Create local build

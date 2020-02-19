@@ -12,6 +12,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import Header from './header';
 import './layout.css';
 import { todosRequested } from '../state/actions/todos';
+import { initalizeSocketIo } from '../state/actions/socketManager';
 
 const Layout = ({ children }: { children: any }) => {
 
@@ -26,6 +27,7 @@ const Layout = ({ children }: { children: any }) => {
      */
 
     dispatch(todosRequested());
+    dispatch(initalizeSocketIo());
 
   }, []);
 

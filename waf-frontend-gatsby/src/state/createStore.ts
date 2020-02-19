@@ -4,6 +4,7 @@ import { load, save } from 'redux-localstorage-simple';
 import { createStore, applyMiddleware } from 'redux';
 import todosCustomMiddleware from './middlewares/todosCustomMiddleware';
 import loginCustomMiddleware from './middlewares/loginCustomMiddleware';
+import socketManager from './middlewares/socketManager';
 import { ILoginState } from './reducers/login';
 import { ITodosState } from './reducers/todos';
 
@@ -20,7 +21,8 @@ export default (preloadedState: IState) => {
       applyMiddleware(
         save({ states: ['loginReducer'] }),
         todosCustomMiddleware(),
-        loginCustomMiddleware()
+        loginCustomMiddleware(),
+        socketManager()
       )
     ),
 

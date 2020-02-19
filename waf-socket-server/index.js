@@ -20,16 +20,30 @@ var numUsers = 0;
 io.on('connection', (socket) => {
   var addedUser = false;
 
-  // when the client emits 'new message', this listens and executes
-  socket.on('new message', (data) => {
-    // we tell the client to execute 'new message'
+  // console.log('user connected! ', socket)
+  console.log('user connected! ')
 
+  socket.on('new message', (data) => {
     console.log('handling new message!')
-    socket.broadcast.emit('dope message', {
-      username: socket.username,
-      message: data
-    });
+    // socket.emit('dope message', {
+    //   username: socket.username,
+    //   message: data
+    // });
+
+    socket.emit('dope message', {"cool": "foo"})
   });
+
+  socket.on('dope response', data => {
+    console.log('server got a dope response! ', data)
+
+    socket.emit('foo baby back', {"message": "foo baby to you too!"})
+  })
+
+  socket.on('foo baby', data => {
+    console.log('got a foo baby! ', data)
+
+    socket.emit('foo baby back', {"message": "foo baby to you too!"})
+  })
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', (username) => {
