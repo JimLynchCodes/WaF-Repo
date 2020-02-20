@@ -44,7 +44,6 @@ Initial sketch drawings of the pages in the WaF app.
 
 <img src="./non-src-images/concept-art/WaF-Concept-Art.png" />
 
-
 # Data
 
 For each enrivonment, have 1 mongo "database" with three collections to hold users, listings, and messages.
@@ -53,6 +52,50 @@ For each enrivonment, have 1 mongo "database" with three collections to hold use
 
 // TODO - describe each of the objects better- User, Listing, Message
 
+
+# Location
+
+This app will be location-first (new buzzword?) meaning that the bulk of the application state will be dependent on location data. In this app, every user will have a location GeoJSON point (basically just two numbers: longitude and latitude), but specifically it's a regular JSON object with this  shape:
+
+```
+{
+    type: "Point",
+    coordinates: [0, 20]
+}
+```
+
+[Thanks to my good friends on reddit](https://www.reddit.com/r/mongodb/comments/f6oobg/how_to_query_for_users_within_a_certain_distance/) I'm thinking we can save a lat / long location point to each user and to each listing. When the user opens the app it then only fetches for listings that are "near" (within X meters of) the user:
+
+```
+Consider a collection places that has a 2dsphere index.
+
+The following example returns documents that are at least 1000 meters from and at most 5000 meters from the specified GeoJSON point, sorted from nearest to farthest:
+
+db.places.find(
+   {
+     location:
+       { $near :
+          {
+            $geometry: { type: "Point",  coordinates: [ -73.9667, 40.78 ] },
+            $minDistance: 1000,
+            $maxDistance: 5000
+          }
+       }
+   }
+)
+```
+^ see more about this [here](https://docs.mongodb.com/manual/reference/operator/query/near/#op._S_near).
+
+
+# Auth
+
+For authentication we're using the good old auth0! Client-side code for the googel / facebook integrationg was inspired by [this nice repo](https://github.com/auth0-blog/gatsby-auth0).
+
+Auth0 on Jim's Gh, "Single-page App"
+
+- waf-dev
+- waf-staging
+- waf-production
 
 # Sockets Architecture
 
