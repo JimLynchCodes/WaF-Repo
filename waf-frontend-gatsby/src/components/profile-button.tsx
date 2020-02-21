@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import LilJimProfileImage from './lil-jim-img';
 import { Link } from 'gatsby';
-// import { ITodo } from '../../models/todo';
 
 const buttonStyle = {
     padding: '5px 10px',
@@ -12,10 +11,7 @@ const buttonStyle = {
     cursor: 'pointer'
 };
 
-
 const profileImgStyle = { width: '50px', marginBottom: '1rem', borderRadius: '50%', overflow: 'hidden' };
-
-
 
 const ProfileButton = ({ }) => {
 
@@ -29,11 +25,16 @@ const ProfileButton = ({ }) => {
         <>
             {
                 !loggedIn &&
+                <>
                 <Link to='/account'>
-                    <button type="button" style={buttonStyle} onClick={toggleState}>
+                    <button type="button" style={buttonStyle}>
                         Login
                     </button>
                 </Link>
+                    <button type="button" style={buttonStyle} onClick={toggleState}>
+                        Fake Login
+                    </button>
+                </>
             }
 
             {
@@ -45,7 +46,7 @@ const ProfileButton = ({ }) => {
 
                     <button type="button" style={buttonStyle} onClick={toggleState}>
                         Logout
-                        </button>
+                    </button>
                 </div>
             }
         </>

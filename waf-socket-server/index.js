@@ -10,6 +10,18 @@ server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
+app.get('/callback', (req, res) => {
+  console.log('we been called with GET, budday!')
+
+  res.send({'ok': 'foo'})
+})
+
+app.post('/callback', (req, res) => {
+  console.log('we been called with POST, budday!')
+
+  res.send({'ok': 'foo'})
+})
+
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 

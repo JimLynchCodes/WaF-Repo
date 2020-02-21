@@ -44,6 +44,11 @@ const setSession = (cb = () => {}) => (err, authResult) => {
     return
   }
 
+  console.log('got auth Result!', authResult)
+  console.log('identities!', authResult.identities)
+  console.log('identities!', authResult.identities.length)
+  console.log('identities!', authResult.identities[0])
+
   if (authResult && authResult.accessToken && authResult.idToken) {
     let expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
     tokens.accessToken = authResult.accessToken

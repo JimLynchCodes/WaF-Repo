@@ -6,7 +6,7 @@
   "author": "Jim Lynch <jim.lynch@evaluates2.com>",
   "scripts": {
     "build": "gatsby build --prefix-paths",
-    "develop": "gatsby develop",
+    "develop": "NODE_ENV=local gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "tslint": "tslint \"src/**/*.ts[x]\" --fix",
     "lint": "npm run format && npm run tslint",

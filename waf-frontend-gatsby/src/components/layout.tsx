@@ -12,28 +12,13 @@ import { useStaticQuery, graphql } from 'gatsby';
 import Header from './header';
 import './layout.css';
 import { todosRequested } from '../state/actions/todos';
-import { initalizeSocketIo } from '../state/actions/socketManager';
 import NavLinkButton from './nav-link-button';
-
 
 const temporaryNavbarStyles = {
   display: "flex",
-  flexDirection: "row",
   justifyContent: "space-around",
   margin: "0 2rem 3rem"
 }
-
-
-const buttonStyle = {
-  // margin: '4vw',
-  padding: '5px 10px',
-  borderRadius: '5px',
-  backgroundColor: 'rebeccapurple',
-  color: 'white',
-  outline: 'none',
-  cursor: 'pointer',
-  height: '4rem'
-};
 
 const Layout = ({ children }: { children: any }) => {
 
@@ -47,7 +32,7 @@ const Layout = ({ children }: { children: any }) => {
      * when the webapp boots up.
      */
 
-     console.log('firing!')
+     console.log('foo is, ' + process.env.FOO)
     dispatch(todosRequested());
     // dispatch(initalizeSocketIo());
 
