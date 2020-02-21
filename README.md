@@ -22,7 +22,7 @@ Mono-repo for the With-A-Friend App!
 - mongo cluster: mongodb+srv://<username>:<password>@cluster333333.mongodb.net/test?retryWrites=true&w=majority
 
 # Vision
-I live in New York f#%@*ng City, and I don't know how to make more friends here. 
+I think it is absolutely insane that I live in massive New York City yet I don't have a *good* way to make more friends here. 
 
 _**WaF is a piece of software meant to connect people in real life.**_
 

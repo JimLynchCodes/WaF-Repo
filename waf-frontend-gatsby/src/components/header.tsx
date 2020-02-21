@@ -1,5 +1,6 @@
 import { Link } from 'gatsby';
 import React from 'react';
+import ProfileButton from './profile-button';
 
 const Header = ({ siteTitle = '' }: { siteTitle: string }) => (
   <header
@@ -13,6 +14,8 @@ const Header = ({ siteTitle = '' }: { siteTitle: string }) => (
         margin: '0 auto',
         maxWidth: 960,
         padding: '1.45rem 1.0875rem',
+        display: "flex",
+        justifyContent: "space-around"
       }}
     >
       <h1 style={{ margin: 0 }}>
@@ -26,7 +29,9 @@ const Header = ({ siteTitle = '' }: { siteTitle: string }) => (
           {siteTitle}
         </Link>
       </h1>
+    <ProfileButton/>
     </div>
+
   </header>
 );
 

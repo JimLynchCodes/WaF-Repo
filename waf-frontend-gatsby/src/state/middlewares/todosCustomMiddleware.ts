@@ -6,10 +6,15 @@ import { MiddlewareAPI, AnyAction } from 'redux';
 
 const todosCustomMiddleware = () => {
   return (store: MiddlewareAPI<any>) => (next: Dispatch<AnyAction>) => async (action: AnyAction) => {
+    
+    console.log('todos middleware handling event!', action)
+    
     switch (action.type) {
       case TODOS_REQUESTED:
-
+        console.log('todos 1')
+        
         try {
+          console.log('todos 2')
           const todosData = await todoService() as ITodosSuccess;
           store.dispatch(todosSuccess(todosData));
         } catch (error) {

@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
 import renderer from 'react-test-renderer';
-import LoginBtn from './login-btn';
+import LoginBtn from './login-btn-OLD';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { LOGIN_REQUESTED, LOGOUT } from '../../state/types/login';

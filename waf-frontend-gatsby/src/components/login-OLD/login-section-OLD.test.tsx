@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import LoginBtn from './login-btn';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
-import LoginSection from './login-section';
+import LoginSection from './login-section-OLD';
 import ShallowRenderer from 'react-test-renderer/shallow';
 
 describe('LoginSection', () => {

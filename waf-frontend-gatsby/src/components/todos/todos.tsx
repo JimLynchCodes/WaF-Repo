@@ -12,6 +12,8 @@ const containerStyle = {
 
 const Todos = ({ todos }: { todos: ITodo[] }) => {
 
+  console.log('todos: ', todos)
+
   return (
     <div style={containerStyle}>
       {todos &&

@@ -13,6 +13,27 @@ import Header from './header';
 import './layout.css';
 import { todosRequested } from '../state/actions/todos';
 import { initalizeSocketIo } from '../state/actions/socketManager';
+import NavLinkButton from './nav-link-button';
+
+
+const temporaryNavbarStyles = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+  margin: "0 2rem 3rem"
+}
+
+
+const buttonStyle = {
+  // margin: '4vw',
+  padding: '5px 10px',
+  borderRadius: '5px',
+  backgroundColor: 'rebeccapurple',
+  color: 'white',
+  outline: 'none',
+  cursor: 'pointer',
+  height: '4rem'
+};
 
 const Layout = ({ children }: { children: any }) => {
 
@@ -26,8 +47,9 @@ const Layout = ({ children }: { children: any }) => {
      * when the webapp boots up.
      */
 
+     console.log('firing!')
     dispatch(todosRequested());
-    dispatch(initalizeSocketIo());
+    // dispatch(initalizeSocketIo());
 
   }, []);
 
@@ -44,6 +66,12 @@ const Layout = ({ children }: { children: any }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
+      <div style={temporaryNavbarStyles}>
+        <NavLinkButton label={"Help"} linkTo={"help"}/>
+        <NavLinkButton label={"Post Listing"} linkTo={"post-listing"}/>
+        <NavLinkButton label={"Messages"} linkTo={"messages"}/>
+        <NavLinkButton label={"Browse"} linkTo={"browse"}/>
+      </div>
       <div
         style={{
           margin: '0 auto',

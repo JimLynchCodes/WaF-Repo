@@ -20,6 +20,8 @@ interface IAction {
 
 const reducer = (state = initialState, action: IAction = {}) => {
 
+  console.log('handling! ', action)
+
   const { type, payload } = action;
 
   switch (type) {

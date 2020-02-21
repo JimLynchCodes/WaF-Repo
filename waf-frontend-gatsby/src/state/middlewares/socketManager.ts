@@ -16,16 +16,16 @@ const socketManager = () => {
 
                 var socket = io('http://localhost:3000');
                 socket.on('connect', function () {
-                    socket.emit('new message', {"username": "TIMMAYYY", "message": "hi"})
+                    socket.emit('new message', { "username": "TIMMAYYY", "message": "hi" })
                     console.log("connected!")
                 });
 
                 socket.on('dope message', function (data: any) {
                     console.log("received a dope message! ", data)
 
-                    socket.emit('dope response', {"foo": "baby"})
+                    socket.emit('dope response', { "foo": "baby" })
                 });
-                
+
                 socket.on('foo baby back', function (data: any) {
                     console.log("received a foo baby message back! ", data)
 
@@ -45,8 +45,8 @@ const socketManager = () => {
 
             //     break;
 
-            //   default:
-            //     next(action);
+            default:
+                next(action);
 
         }
     };
