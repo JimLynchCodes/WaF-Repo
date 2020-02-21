@@ -2,13 +2,16 @@ import React from 'react';
 import { Link } from 'gatsby';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import PostListingForm from '../components/post-listing-form';
 
 const PostListingPage = () => (
   <Layout>
     <SEO title='Page two' />
-    <h1>Hi from the PostListing</h1>
-    <p>Welcome to page 2</p>
-    <Link to='/'>Go back to the homepage</Link>
+    <h1>Create A New Listing!</h1>
+
+    <p>Fill out this short form to create a new listing!</p>
+    <PostListingForm/>
+
   </Layout>
 );
 
