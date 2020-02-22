@@ -1,0 +1,16 @@
+language: node_js
+sudo: false
+node_js:
+  - "12.14.1"
+install:
+  - npm install
+script:
+  # - npm run lint && npm run sass
+  # - karma start  # TODO, make this work on ci
+  # - npm run build:prod
+
+branches:
+  only:
+  - master
+  - staging
+  - dev
