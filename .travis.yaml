@@ -3,14 +3,16 @@ sudo: false
 node_js:
   - "12.14.1"
 install:
+  - cd waf-frontend-gatsby
   - npm install
 script:
   # - npm run lint && npm run sass
   # - karma start  # TODO, make this work on ci
   # - npm run build:prod
 
-branches:
-  only:
-  - master
-  - staging
-  - dev
+  - echo "ok then!" 
+# branches:
+#   only:
+#   - master
+#   - staging
+#   - dev
