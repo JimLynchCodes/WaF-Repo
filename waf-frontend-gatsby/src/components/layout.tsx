@@ -55,7 +55,7 @@ const Layout = ({ children }: { children: any }) => {
         <NavLinkButton label={"Help"} linkTo={"help"}/>
         <NavLinkButton label={"Post Listing"} linkTo={"post-listing"}/>
         <NavLinkButton label={"Messages"} linkTo={"messages"}/>
-        <NavLinkButton label={"Browse"} linkTo={"browse"}/>
+        <NavLinkButton label={"Browse"} linkTo={"browse-listings"}/>
       </div>
       <div
         style={{
@@ -67,14 +67,7 @@ const Layout = ({ children }: { children: any }) => {
       >
         <main>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Built with
-          {' '}
-          <a href='https://www.gatsbyjs.org'>Gatsby</a>
-          {' '}
-          by
-          {' '}
-          <a href='https://www.evaluates2.com'>Evaluates2</a>
-          .
+          © {new Date().getFullYear()}, WaF App
         </footer>
       </div>
     </>

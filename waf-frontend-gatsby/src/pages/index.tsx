@@ -21,7 +21,7 @@ const pStyle = {
 const IndexPage = ({ todos = [], userId = 0}: { todos: ITodo[] | undefined, userId: number | undefined }) => {
 
   useEffect(() => {
-    navigate('/browse')
+    navigate('/browse-listings')
   }, []);
 
   return (

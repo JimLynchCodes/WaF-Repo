@@ -26,11 +26,11 @@ const ProfileButton = ({ }) => {
             {
                 !loggedIn &&
                 <>
-                <Link to='/account'>
-                    <button type="button" style={buttonStyle}>
-                        Login
+                    <Link to='/account'>
+                        <button type="button" style={buttonStyle}>
+                            Login
                     </button>
-                </Link>
+                    </Link>
                     <button type="button" style={buttonStyle} onClick={toggleState}>
                         Fake Login
                     </button>
@@ -40,9 +40,12 @@ const ProfileButton = ({ }) => {
             {
                 loggedIn &&
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={profileImgStyle}>
-                        <LilJimProfileImage />
-                    </div>
+
+                    <Link to="/my-profile/">
+                        <div style={profileImgStyle}>
+                            <LilJimProfileImage />
+                        </div>
+                    </Link>
 
                     <button type="button" style={buttonStyle} onClick={toggleState}>
                         Logout
