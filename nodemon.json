@@ -1,0 +1,5 @@
+{
+    "main": "src/index.js",
+    "verbose": true,
+    "ignore": ["*.test.js", "dist/*"]
+  }
