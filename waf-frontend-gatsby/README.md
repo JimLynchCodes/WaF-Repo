@@ -95,3 +95,5 @@ Duplicate `.sample.env` and enter the appropriate values for each environment:
 
 To use an environment specific .env file, start the server prefixed with `NODE_ENV=<envivonment>`. (See the current start command in package.json)
 
+# More Secrets
+For more secret values and URLs please see Jim's Google doc, "Server Locations".
