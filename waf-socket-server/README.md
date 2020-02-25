@@ -92,6 +92,33 @@ to create a fresh db name "waf-local" with the three collections pre-seeded with
 ```
 
 # A Nice Local Mongo GUI
+It can be very pleasant to have a nice graphical client for visualizing the data in your mongo collections. For this project we like to use [Robo3t](https://robomongo.org/).
 
-...
+If you've ever used "MySQL Workbench", this is basically a similar program but for Mongo.
+
+Either Robo3T or Studio3T will work fine.
+
+## Local DB Robo 3T Setup
+
+- Choose "Create" connection
+- For type, choose "Direct Connection"
+- Name: WaF Local
+- Address: localhost 27017
+
+## Atlas DB Robo 3T Setup
+
+- Choose "Create" connection
+- For type, choose "Replica Set"
+- Name: WaF Production
+- In the field with palceholder "Import connection details..." enter the mongo srv string.
+
+eg:
+```
+mongodb+srv://AdminJim:<password>@cluster0-xahr1.mongodb.net/test
+```
+
+- then click "From SRV", hit "Save", and then "Connect".
+
+
+
 
