@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es2018"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "outDir": "./dist",
+    "pretty": true,
+    "paths": {
+      "*": ["src/@types/*"]
+    },
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ],
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "target": "es2018",
+    "types": ["node"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts"]
+}
