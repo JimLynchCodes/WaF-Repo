@@ -23,17 +23,25 @@ app.post('/callback', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 // Chatroom
 let numUsers = 0;
-console.log('yep, ', foo_1.bar());
+// console.log('yep, ', bar())
 io.on('connection', (socket) => {
     let addedUser = false;
     // console.log('user connected! ', socket)
     console.log('user connected! ');
-    socket.on('new message', (data) => {
+    socket.on('GENERIC_MESSAGE', async (data) => {
+        const fooResult = await foo_1.bar();
+        socket.emit('GENERIC_MESSAGE_REPONSE', {
+            username: socket.username,
+            message: fooResult
+        });
+    });
+    socket.on('new message', async (data) => {
         console.log('handling new message!');
         // socket.emit('dope message', {
         //   username: socket.username,
         //   message: data
         // });
+        // const  g = await foo();
         socket.emit('dope message', { cool: 'foo' });
     });
     socket.on('dope response', (data) => {

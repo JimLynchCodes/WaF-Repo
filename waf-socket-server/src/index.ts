@@ -31,20 +31,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 let numUsers = 0;
 
-console.log('yep, ', bar())
+// console.log('yep, ', bar())
 
 io.on('connection', (socket: any) => {
   let addedUser = false;
 
   // console.log('user connected! ', socket)
   console.log('user connected! ')
+  
+  socket.on('GENERIC_MESSAGE', async (data: any) => {
 
-  socket.on('new message', (data: any) => {
+    const fooResult = await bar()
+
+    socket.emit('GENERIC_MESSAGE_REPONSE', {
+      username: socket.username,
+      message: fooResult
+    });
+
+  })
+
+  socket.on('new message', async (data: any) => {
     console.log('handling new message!')
     // socket.emit('dope message', {
     //   username: socket.username,
     //   message: data
     // });
+
+
+    // const  g = await foo();
+
 
     socket.emit('dope message', {cool: 'foo'})
   });
@@ -72,6 +87,7 @@ io.on('connection', (socket: any) => {
     socket.emit('login', {
       numUsers
     });
+    
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
       username: socket.username,
