@@ -4,8 +4,7 @@
   "description": "waf backend socket.io server",
   "main": "app.js",
   "scripts": {
-    "start2": "nodemon -e ts --watch src/index.ts --exec \"npm run clean && npm run compile && npm run host:dev-build\"",
-    "start": "nodemon -e ts --watch src --exec \"npm run compile && npm start\"",
+    "start": "nodemon -e ts --watch src/index.ts --exec \"npm run clean && npm run compile && npm run host:dev-build\"",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "jest",
     "test:cov": "jest --coverage",
