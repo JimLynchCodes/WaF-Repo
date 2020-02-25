@@ -1,4 +1,4 @@
-// Setup basic express server
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -7,46 +7,81 @@ const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 
 import { bar } from './event-handlers/foo'
+import { processLoginSuccess } from './event-handlers/login-success'
+import { userInfo } from 'os';
 
 server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
-app.get('/callback', (req: any, res: any) => {
-  console.log('we been called with GET, budday!')
-
-  res.send({ok: 'foo'})
-})
-
-app.post('/callback', (req: any, res: any) => {
-  console.log('we been called with POST, budday!')
-
-  res.send({ok: 'foo'})
-})
-
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Chatroom
-
 let numUsers = 0;
-
-// console.log('yep, ', bar())
 
 io.on('connection', (socket: any) => {
   let addedUser = false;
 
-  // console.log('user connected! ', socket)
   console.log('user connected! ')
-  
+  io.emit('USERS_ONLINE_UPDATE', {
+    usersOnline: io.engine.clientsCount
+  })
+
+  socket.on('LOGIN_SUCCESS', async (data: any) => {
+
+    const loginResult: any = await processLoginSuccess(socket, data);
+    
+    socket.emit('LOGIN_SUCCESS_PROCESSED', {
+      data: loginResult
+    });
+    
+    if (loginResult.user.location) {
+      
+      const nearbyListings: any = await getNearbyListings(loginResult.user.location);
+
+      socket.emit('NEARBY_LISTINGS', {
+        data: {
+          location: loginResult.user.location,
+          listings: nearbyListings
+        }
+      });
+    }
+
+  })
+
+
+  socket.on('UPDATE_LOCATION', async (data: any) => {
+ 
+    const nearbyListings: any = await getNearbyListings(data.location);
+    socket.emit('NEARBY_LISTINGS', {
+      data: {
+        location: data.location,
+        listings: nearbyListings
+      }
+    });
+  })
+
+
   socket.on('GENERIC_MESSAGE', async (data: any) => {
 
-    const fooResult = await bar()
+    console.log('connected1 ', io.engine.clientsCount)
+    console.log('connected2 ', io.sockets.sockets.length)
+    console.log('connected3 ', Object.keys(io.sockets.connected).length)
 
-    socket.emit('GENERIC_MESSAGE_REPONSE', {
-      username: socket.username,
-      message: fooResult
+    // const fooResult = await bar()
+
+    io.emit('GENERIC_MESSAGE_RESPONSE', {
+      username: "hmm",
+      message: "ok"
     });
+
+    socket.emit('GENERIC_MESSAGE_RESPONSE', {
+      username: "hmm",
+      message: "ok"
+    });
+
+    console.log('hmm...')
 
   })
 
@@ -61,19 +96,19 @@ io.on('connection', (socket: any) => {
     // const  g = await foo();
 
 
-    socket.emit('dope message', {cool: 'foo'})
+    socket.emit('dope message', { cool: 'foo' })
   });
 
   socket.on('dope response', (data: any) => {
     console.log('server got a dope response! ', data)
 
-    socket.emit('foo baby back', {message: 'foo baby to you too!'})
+    socket.emit('foo baby back', { message: 'foo baby to you too!' })
   })
 
   socket.on('foo baby', (data: any) => {
     console.log('got a foo baby! ', data)
 
-    socket.emit('foo baby back', {message: 'foo baby to you too!'})
+    socket.emit('foo baby back', { message: 'foo baby to you too!' })
   })
 
   // when the client emits 'add user', this listens and executes
@@ -87,11 +122,11 @@ io.on('connection', (socket: any) => {
     socket.emit('login', {
       numUsers
     });
-    
+
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
       username: socket.username,
-     numUsers
+      numUsers
     });
   });
 
@@ -110,15 +145,12 @@ io.on('connection', (socket: any) => {
   });
 
   // when the user disconnects.. perform this
-  socket.on('disconnect', () => {
-    if (addedUser) {
-      --numUsers;
+  socket.on('disconnect', (socket: any) => {
+    console.log('user disconnected', socket)
 
-      // echo globally that this client has left
-      socket.broadcast.emit('user left', {
-        username: socket.username,
-        numUsers
-      });
-    }
+    io.emit('USERS_ONLINE_UPDATE', {
+      usersOnline: io.engine.clientsCount
+    })
+
   });
 });

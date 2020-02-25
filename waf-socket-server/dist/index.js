@@ -1,39 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// Setup basic express server
 const express = require('express');
 const app = express();
 const path = require('path');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
-const foo_1 = require("./event-handlers/foo");
+const login_success_1 = require("./event-handlers/login-success");
 server.listen(port, () => {
     console.log('Server listening at port %d', port);
-});
-app.get('/callback', (req, res) => {
-    console.log('we been called with GET, budday!');
-    res.send({ ok: 'foo' });
-});
-app.post('/callback', (req, res) => {
-    console.log('we been called with POST, budday!');
-    res.send({ ok: 'foo' });
 });
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 // Chatroom
 let numUsers = 0;
-// console.log('yep, ', bar())
 io.on('connection', (socket) => {
     let addedUser = false;
-    // console.log('user connected! ', socket)
     console.log('user connected! ');
-    socket.on('GENERIC_MESSAGE', async (data) => {
-        const fooResult = await foo_1.bar();
-        socket.emit('GENERIC_MESSAGE_REPONSE', {
-            username: socket.username,
-            message: fooResult
+    io.emit('USERS_ONLINE_UPDATE', {
+        usersOnline: io.engine.clientsCount
+    });
+    socket.on('LOGIN_SUCCESS', async (data) => {
+        const loginResult = await login_success_1.processLoginSuccess(socket, data);
+        socket.emit('LOGIN_SUCCESS_PROCESSED', {
+            data: loginResult
         });
+    });
+    socket.on('GENERIC_MESSAGE', async (data) => {
+        console.log('connected1 ', io.engine.clientsCount);
+        console.log('connected2 ', io.sockets.sockets.length);
+        console.log('connected3 ', Object.keys(io.sockets.connected).length);
+        // const fooResult = await bar()
+        io.emit('GENERIC_MESSAGE_RESPONSE', {
+            username: "hmm",
+            message: "ok"
+        });
+        socket.emit('GENERIC_MESSAGE_RESPONSE', {
+            username: "hmm",
+            message: "ok"
+        });
+        console.log('hmm...');
     });
     socket.on('new message', async (data) => {
         console.log('handling new message!');
@@ -82,15 +88,11 @@ io.on('connection', (socket) => {
         });
     });
     // when the user disconnects.. perform this
-    socket.on('disconnect', () => {
-        if (addedUser) {
-            --numUsers;
-            // echo globally that this client has left
-            socket.broadcast.emit('user left', {
-                username: socket.username,
-                numUsers
-            });
-        }
+    socket.on('disconnect', (socket) => {
+        console.log('user disconnected', socket);
+        io.emit('USERS_ONLINE_UPDATE', {
+            usersOnline: io.engine.clientsCount
+        });
     });
 });
 //# sourceMappingURL=index.js.map
