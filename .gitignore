@@ -15,3 +15,4 @@ components/routes/_*
 .vscode/
 *.pem
 ecosystem.config.js
+dist/*
