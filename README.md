@@ -28,11 +28,11 @@ _**WaF is a piece of software meant to connect people in real life.**_
 
 There are some popular apps that already exist which try to do this, but to me none of them really cut it: 
 
-- Facebook.com is just for family and people you already know
+- ____Facebook.com__ is just for family and people you already know._
 
-- Meetup.com turns out to be big group things where I'm not really engaged. 
+- ___Meetup.com__ turns out to be big group things where I'm not really engaged._
 
-- Dating apps are just about hooking up. 
+- ___Dating apps__ are just about hooking up._
 
 
 WaF is different because WaF is about individuals who happen to exist in a similar place and time finding each other and becoming friends over common interests. 
