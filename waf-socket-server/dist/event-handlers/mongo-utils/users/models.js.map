@@ -1,0 +1,1 @@
+{"version":3,"file":"models.js","sourceRoot":"","sources":["../../../../src/event-handlers/mongo-utils/users/models.ts"],"names":[],"mappings":";;AACA,uCAAmD;AAMtC,QAAA,UAAU,GAAG,IAAI,iBAAM,CAAC;IACjC,MAAM,EAAE,EAAE,IAAI,EAAE,MAAM,EAAE,QAAQ,EAAE,IAAI,EAAE;CAC3C,CAAC,CAAC;AAEH,MAAM,IAAI,GAAG,gBAAK,CAAQ,MAAM,EAAE,kBAAU,CAAC,CAAC;AAC9C,kBAAe,IAAI,CAAC"}

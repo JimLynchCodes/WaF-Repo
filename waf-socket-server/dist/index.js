@@ -7,6 +7,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 const login_success_1 = require("./event-handlers/login-success");
+const get_nearby_listings_1 = require("./event-handlers/mongo-utils/get-nearby-listings");
 server.listen(port, () => {
     console.log('Server listening at port %d', port);
 });
@@ -17,13 +18,34 @@ let numUsers = 0;
 io.on('connection', (socket) => {
     let addedUser = false;
     console.log('user connected! ');
+    console.log('mongo: ', process.env.MONGO_URI);
     io.emit('USERS_ONLINE_UPDATE', {
         usersOnline: io.engine.clientsCount
     });
     socket.on('LOGIN_SUCCESS', async (data) => {
+        console.log('handling LOGIN_SUCCESS');
         const loginResult = await login_success_1.processLoginSuccess(socket, data);
+        console.log('processed login: ', loginResult);
         socket.emit('LOGIN_SUCCESS_PROCESSED', {
             data: loginResult
+        });
+        if (loginResult.location) {
+            const nearbyListings = await get_nearby_listings_1.getNearbyListings(loginResult.location);
+            socket.emit('NEARBY_LISTINGS', {
+                data: {
+                    location: loginResult.location,
+                    listings: nearbyListings
+                }
+            });
+        }
+    });
+    socket.on('UPDATE_LOCATION', async (data) => {
+        const nearbyListings = await get_nearby_listings_1.getNearbyListings(data.location);
+        socket.emit('NEARBY_LISTINGS', {
+            data: {
+                location: data.location,
+                listings: nearbyListings
+            }
         });
     });
     socket.on('GENERIC_MESSAGE', async (data) => {

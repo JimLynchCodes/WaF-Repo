@@ -12,7 +12,7 @@ const buttonStyle = {
 
 const profileImgStyle = { width: '50px', marginBottom: '1rem', borderRadius: '50%', overflow: 'hidden' };
 
-const ListingItem = ({header, creator, messagesRoomsList }: any) => {
+const ListingItem = ({ header, creator, messagesRoomsList }: any) => {
 
     const [loggedIn, setLoggedIn] = useState(false)
 
@@ -27,7 +27,7 @@ const ListingItem = ({header, creator, messagesRoomsList }: any) => {
             {
                 messagesRoomsList.map((room: any, i: number) => {
                     return (
-                        <Link to="/listing-details">
+                        <Link to="/listing-details" key={i}>
 
                             <div style={{
                                 padding: '20px',
@@ -41,7 +41,7 @@ const ListingItem = ({header, creator, messagesRoomsList }: any) => {
                                 outline: 'none',
                                 cursor: 'pointer',
                                 flexDirection: 'column'
-                            }} key={i}>
+                            }} >
 
                                 <div>
                                     <h4>

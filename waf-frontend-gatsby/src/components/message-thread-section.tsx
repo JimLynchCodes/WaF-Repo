@@ -29,7 +29,7 @@ const MessageThreadSection = ({ header, creator, messagesRoomsList }: any) => {
             {
                 messagesRoomsList.map((room: any, i: number) => {
                     return (
-                        <Link to="/message-thread">
+                        <Link to="/message-thread" key={i}>
 
                             <div style={{
                                 padding: '20px',
@@ -43,7 +43,7 @@ const MessageThreadSection = ({ header, creator, messagesRoomsList }: any) => {
                                 outline: 'none',
                                 cursor: 'pointer',
                                 flexDirection: 'column'
-                            }} key={i}>
+                            }} >
 
                                 <div>
                                     <h4>

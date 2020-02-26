@@ -1,11 +1,12 @@
-import Book, { connectToMongo } from './connect-to-mongo';
+import { connectToMongo } from './connect-to-mongo';
+import User, { IUser } from './users/models';
 
-export const getNearbyListings = async (id) => {
+export const getNearbyListings = async (id: any) => {
     
     await connectToMongo()
 
     try {
-        const doc = await Book.find({userId: id});
+        const doc = await User.findOne({userId: id});
         return {
             statusCode: 200,
             body: JSON.stringify({

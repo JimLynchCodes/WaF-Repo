@@ -105,6 +105,13 @@ Either Robo3T or Studio3T will work fine.
 - Name: WaF Local
 - Address: localhost 27017
 
+
+You can run the database seeding script to create the proper database, collections, and fill them with some sample data:
+```
+mongo localhost:27017/waf-local seed.js
+```
+
+
 ## Atlas DB Robo 3T Setup
 
 - Choose "Create" connection
@@ -119,6 +126,9 @@ mongodb+srv://AdminJim:<password>@cluster0-xahr1.mongodb.net/test
 
 - then click "From SRV", hit "Save", and then "Connect".
 
+# Pm2
+This project uses the pm2 library, a process manager for node.js projects. It has a few nice features including automatically restarting your node process whenever it crashes which is great for when you want that (usually the case for backends hosted live). 
 
+The environment variables are also loaded through pm2 using the `ecosystem.config.js` file. The environment is chosen by passing in the environment for the value of the `--env` flag when running pm2.
 
 

@@ -77,7 +77,7 @@ const PostListingForm = ({ onSignIn, error, loading }: any) => {
                             type="text"
                             // label="Phone"
                             // onChange={formikProps.setFieldValue(this, 'phone')}
-                            value={formikProps.values.phone}
+                            // value={formikProps.values.phone}
                             name="phone"
                             required
                             disabled={loading}
@@ -90,7 +90,7 @@ const PostListingForm = ({ onSignIn, error, loading }: any) => {
                             // type="text"
                             // label="Phone"
                             // onChange={formikProps.setFieldValue(this, 'phone')}
-                            value={formikProps.values.phone}
+                            // value={formikProps.values.phone}
                             name="phone"
                             required
                             disabled={loading}
@@ -111,8 +111,8 @@ const PostListingForm = ({ onSignIn, error, loading }: any) => {
                         />
                     </p>
 
+                    <h3>Activate This Listing?</h3><br />
                     <p>
-                        <h3>Activate This Listing?</h3><br />
                         Note: Only active listings are visible to other users! Free accounts can only have 1 active listing at a time!
 
                     </p>

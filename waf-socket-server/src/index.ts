@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 
 import { bar } from './event-handlers/foo'
 import { processLoginSuccess } from './event-handlers/login-success'
+import { getNearbyListings } from './event-handlers/mongo-utils/get-nearby-listings'
 import { userInfo } from 'os';
 
 server.listen(port, () => {
@@ -24,25 +25,31 @@ io.on('connection', (socket: any) => {
   let addedUser = false;
 
   console.log('user connected! ')
+
+  console.log('mongo: ', process.env.MONGO_URI)
+
   io.emit('USERS_ONLINE_UPDATE', {
     usersOnline: io.engine.clientsCount
   })
 
   socket.on('LOGIN_SUCCESS', async (data: any) => {
 
+    console.log('handling LOGIN_SUCCESS')
     const loginResult: any = await processLoginSuccess(socket, data);
     
+    console.log('processed login: ', loginResult)
+
     socket.emit('LOGIN_SUCCESS_PROCESSED', {
       data: loginResult
     });
     
-    if (loginResult.user.location) {
+    if (loginResult.location) {
       
-      const nearbyListings: any = await getNearbyListings(loginResult.user.location);
+      const nearbyListings: any = await getNearbyListings(loginResult.location);
 
       socket.emit('NEARBY_LISTINGS', {
         data: {
-          location: loginResult.user.location,
+          location: loginResult.location,
           listings: nearbyListings
         }
       });
@@ -68,8 +75,6 @@ io.on('connection', (socket: any) => {
     console.log('connected1 ', io.engine.clientsCount)
     console.log('connected2 ', io.sockets.sockets.length)
     console.log('connected3 ', Object.keys(io.sockets.connected).length)
-
-    // const fooResult = await bar()
 
     io.emit('GENERIC_MESSAGE_RESPONSE', {
       username: "hmm",

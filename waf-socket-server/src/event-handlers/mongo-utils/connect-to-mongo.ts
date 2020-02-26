@@ -1,5 +1,4 @@
-import { connect, Document, Schema, model } from "mongoose";
-require('dotenv').config()
+import { connect } from "mongoose";
 
 let connected = false
 let connection: any
@@ -7,7 +6,6 @@ let connection: any
 export const connectToMongo = async() => {
 
     console.log('Really connecting to mongo (no mocks)!', connected)
-    
 
     if (connected) 
         return connection
@@ -31,16 +29,3 @@ export const connectToMongo = async() => {
         
     }
 }
-
-export interface IBook extends Document {
-    title: string;
-    author: string;
-}
-
-export const BookSchema = new Schema({
-    title: { type: String, required: true },
-    author: { type: String, required: true }
-});
-
-const Book = model<IBook>("Book", BookSchema);
-export default Book;

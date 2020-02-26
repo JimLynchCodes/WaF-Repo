@@ -4,7 +4,7 @@
   "description": "waf backend socket.io server",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon -e ts --watch src/index.ts --exec \"npm run clean && npm run compile && npm run host:dev-build\"",
+    "start": "nodemon -e ts --watch src/index.ts --exec \"npm run clean && npm run compile && npm run pm2:local\"",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "jest",
     "test:cov": "jest --coverage",
@@ -12,7 +12,9 @@
     "build": "npm run clean && npm run compile",
     "host:dev-build": "node ./dist/index.js",
     "host:prod-build": "node ./dist/index.js",
-    "pm2": "pm2 start ecosystem.config.js --env=local --update-env",
+    "pm2:local": "pm2 restart ecosystem.config.js --env=local --update-env",
+    "pm2:logs": "pm2 logs --lines 500",
+    "pm2:production": "pm2 restart ecosystem.config.js --env=production --update-env",
     "deploy": "echo TODO - manual deploy...",
     "compile": "tsc",
     "clean": "rm -rf ./dist"
