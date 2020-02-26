@@ -97,7 +97,7 @@ Auth0 on Jim's Gh, "Single-page App"
 - waf-staging
 - waf-production
 
-# Sockets Architecture
+# Initial Sockets Architecture
 
 To keep things realtime, most of the data transfer will happen via [socketIo](https://socket.io/docs/) events. Here's a diagram for the inial plan for the events for WaF app. 
 _Note: the most up-to-date version of this is [here](https://docs.google.com/drawings/d/1oxLMYoFBzs7PLJfJP0kSswtDAGsNcgwF3tt53YYzvW4/edit?usp=sharing)- ask jim for permissions! :)_ 
