@@ -9,11 +9,11 @@ import { ILoginState } from './reducers/login';
 import { ITodosState } from './reducers/todos';
 
 export interface IState {
-  loginReducer: ILoginState,
-  todosReducer: ITodosState
+  loginReducer?: ILoginState,
+  todosReducer?: ITodosState
 }
 
-export default (preloadedState: IState) => {
+export default (preloadedState: IState = {}) => {
   return createStore(
     combinedReducers,
     getLoadedState(preloadedState),

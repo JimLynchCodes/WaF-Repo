@@ -1,13 +1,20 @@
-import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCESS, LOGOUT } from '../types/login';
+import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCESS, LOGOUT, LOGIN_SUCCESS_PROCESSED } from '../types/login';
 import { ILoginSuccess, ILoginError } from '../../services/simple-login.service';
 
 export const loginRequested = () => ({
   type: LOGIN_REQUESTED,
 });
 
-export const loginSuccess = (userId: ILoginSuccess | ILoginError) => ({
+export const loginSuccess = (userObj: any) => {
+  console.log('dispatching login success...')
+  return {
   type: LOGIN_SUCCESS,
-  payload: { userId },
+  payload: userObj,
+}};
+
+export const loginSuccessProcessed = (error: Error) => ({
+  type: LOGIN_SUCCESS_PROCESSED,
+  payload: error,
 });
 
 export const loginFailed = (error: Error) => ({

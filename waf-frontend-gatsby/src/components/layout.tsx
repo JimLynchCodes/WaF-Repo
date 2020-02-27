@@ -13,6 +13,7 @@ import Header from './header';
 import './layout.css';
 import { todosRequested } from '../state/actions/todos';
 import NavLinkButton from './nav-link-button';
+import { initalizeSocketIo } from '../state/actions/socketManager';
 
 const temporaryNavbarStyles = {
   display: "flex",
@@ -33,8 +34,8 @@ const Layout = ({ children }: { children: any }) => {
      */
 
      console.log('foo is, ' + process.env.FOO)
-    dispatch(todosRequested());
-    // dispatch(initalizeSocketIo());
+    // dispatch(todosRequested());
+    dispatch(initalizeSocketIo());
 
   }, []);
 

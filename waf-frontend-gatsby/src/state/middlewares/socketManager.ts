@@ -5,6 +5,9 @@ import { todosSuccess, todosFailed } from '../actions/todos';
 import { Dispatch } from 'react';
 import { MiddlewareAPI, AnyAction, Action } from 'redux';
 import io from 'socket.io-client';
+import { LOGIN_SUCCESS } from '../types/login';
+
+let socket: any = null;
 
 const socketManager = () => {
     return (store: MiddlewareAPI<any>) => (next: Dispatch<AnyAction>) => async (action: AnyAction) => {
@@ -14,8 +17,8 @@ const socketManager = () => {
             case INTIALIZE_SOCKETIO_CONNECTION:
                 console.log('handling INTIALIZE_SOCKETIO_CONNECTION! Let\'s connect!')
 
-                var socket = io('http://localhost:3000');
-                socket.on('connect', function () {
+                socket = io('http://localhost:3000');
+                socket.on('connect', () => {
                     socket.emit('new message', { "username": "TIMMAYYY", "message": "hi" })
                     console.log("connected!")
                 });
@@ -36,6 +39,18 @@ const socketManager = () => {
                     console.log("disconnected!")
                 });
 
+                break;
+
+            case LOGIN_SUCCESS:
+
+                console.log('handling login success and sending payload:', action.payload)
+                // console.log('p: ', payload)
+                // socket.emit(LOGIN_SUCCESS, payload)
+                break;
+
+
+
+
             //     try {
             //       const todosData = await todoService() as ITodosSuccess;
             //       store.dispatch(todosSuccess(todosData));
@@ -52,5 +67,8 @@ const socketManager = () => {
     };
 };
 
+export const sendToServer = (event: string, payload: any) => {
+    
+}
 
 export default socketManager;

@@ -15,7 +15,7 @@ const loginCustomMiddleware = () => {
   return (store: MiddlewareAPI<any>) => (next: Dispatch<any>) => async (action: AnyAction) => {
     switch (action.type) {
 
-      case LOGIN_REQUESTED:
+      case "OLD_LOGIN_STUFF":
         try {
           const userId: ILoginSuccess | ILoginError = await loginService();
           store.dispatch(loginSuccess(userId));
