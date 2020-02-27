@@ -28,11 +28,11 @@ _**WaF is a piece of software meant to connect people in real life.**_
 
 There are some popular apps that already exist which try to do this, but to me none of them really cut it: 
 
-- Facebook.com is just for family and people you already know
+- ____Facebook.com__ is just for family and people you already know._
 
-- Meetup.com turns out to be big group things where I'm not really engaged. 
+- ___Meetup.com__ turns out to be big group things where I'm not really engaged._
 
-- Dating apps are just about hooking up. 
+- ___Dating apps__ are just about hooking up._
 
 
 WaF is different because WaF is about individuals who happen to exist in a similar place and time finding each other and becoming friends over common interests. 
@@ -97,7 +97,7 @@ Auth0 on Jim's Gh, "Single-page App"
 - waf-staging
 - waf-production
 
-# Sockets Architecture
+# Initial Sockets Architecture
 
 To keep things realtime, most of the data transfer will happen via [socketIo](https://socket.io/docs/) events. Here's a diagram for the inial plan for the events for WaF app. 
 _Note: the most up-to-date version of this is [here](https://docs.google.com/drawings/d/1oxLMYoFBzs7PLJfJP0kSswtDAGsNcgwF3tt53YYzvW4/edit?usp=sharing)- ask jim for permissions! :)_ 
