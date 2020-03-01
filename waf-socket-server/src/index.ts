@@ -8,8 +8,9 @@ const port = process.env.PORT || 3000;
 
 import { bar } from './event-handlers/foo'
 import { processLoginSuccess } from './event-handlers/login-success'
-import { getNearbyListings } from './event-handlers/mongo-utils/get-nearby-listings'
+import { getNearbyListings } from './event-handlers/mongo-utils/listings/get-nearby-listings'
 import { userInfo } from 'os';
+import { handleSubmitManuallyEnteredZipcode, handleSubmitUpdatedLocation } from './event-handlers/submit-zipcode';
 
 server.listen(port, () => {
   console.log('Server listening at port %d', port);
@@ -36,15 +37,15 @@ io.on('connection', (socket: any) => {
 
     console.log('handling LOGIN_SUCCESS')
     const loginResult: any = await processLoginSuccess(socket, data);
-    
+
     console.log('processed login: ', loginResult)
 
     socket.emit('LOGIN_SUCCESS_PROCESSED', {
       data: loginResult
     });
-    
+
     if (loginResult.location) {
-      
+
       const nearbyListings: any = await getNearbyListings(loginResult.location);
 
       socket.emit('NEARBY_LISTINGS', {
@@ -55,65 +56,6 @@ io.on('connection', (socket: any) => {
       });
     }
 
-  })
-
-
-  socket.on('UPDATE_LOCATION', async (data: any) => {
- 
-    const nearbyListings: any = await getNearbyListings(data.location);
-    socket.emit('NEARBY_LISTINGS', {
-      data: {
-        location: data.location,
-        listings: nearbyListings
-      }
-    });
-  })
-
-
-  socket.on('GENERIC_MESSAGE', async (data: any) => {
-
-    console.log('connected1 ', io.engine.clientsCount)
-    console.log('connected2 ', io.sockets.sockets.length)
-    console.log('connected3 ', Object.keys(io.sockets.connected).length)
-
-    io.emit('GENERIC_MESSAGE_RESPONSE', {
-      username: "hmm",
-      message: "ok"
-    });
-
-    socket.emit('GENERIC_MESSAGE_RESPONSE', {
-      username: "hmm",
-      message: "ok"
-    });
-
-    console.log('hmm...')
-
-  })
-
-  socket.on('new message', async (data: any) => {
-    console.log('handling new message!')
-    // socket.emit('dope message', {
-    //   username: socket.username,
-    //   message: data
-    // });
-
-
-    // const  g = await foo();
-
-
-    socket.emit('dope message', { cool: 'foo' })
-  });
-
-  socket.on('dope response', (data: any) => {
-    console.log('server got a dope response! ', data)
-
-    socket.emit('foo baby back', { message: 'foo baby to you too!' })
-  })
-
-  socket.on('foo baby', (data: any) => {
-    console.log('got a foo baby! ', data)
-
-    socket.emit('foo baby back', { message: 'foo baby to you too!' })
   })
 
   // when the client emits 'add user', this listens and executes
@@ -158,4 +100,76 @@ io.on('connection', (socket: any) => {
     })
 
   });
+
+
+  socket.on('SUBMIT_MANUALLY_ENTERED_ZIPCODE', async (data: any) => {
+    handleSubmitManuallyEnteredZipcode(socket, data)
+  });
+
+  socket.on('SUBMIT_UPDATED_LOCATION', async (data: any) => {
+    handleSubmitUpdatedLocation(socket, data)
+  });
+
+  // ===== Errthing below here is OLD!!! (an not used anymore but still here just for referece. delete it soon plz. smh) ===
+
+//   socket.on('SUBMIT_UPDATED_LOCATION', async (data: any) => {
+
+//   const nearbyListings: any = await getNearbyListings(data.location);
+//   socket.emit('NEARBY_LISTINGS', {
+//     data: {
+//       location: data.location,
+//       listings: nearbyListings
+//     }
+//   });
+// })
+
+
+  socket.on('GENERIC_MESSAGE', async (data: any) => {
+
+  console.log('connected1 ', io.engine.clientsCount)
+  console.log('connected2 ', io.sockets.sockets.length)
+  console.log('connected3 ', Object.keys(io.sockets.connected).length)
+
+  io.emit('GENERIC_MESSAGE_RESPONSE', {
+    username: "hmm",
+    message: "ok"
+  });
+
+  socket.emit('GENERIC_MESSAGE_RESPONSE', {
+    username: "hmm",
+    message: "ok"
+  });
+
+  console.log('hmm...')
+
+})
+
+  socket.on('new message', async (data: any) => {
+  console.log('handling new message!')
+  // socket.emit('dope message', {
+  //   username: socket.username,
+  //   message: data
+  // });
+
+
+  // const  g = await foo();
+
+
+  socket.emit('dope message', { cool: 'foo' })
+});
+
+socket.on('dope response', (data: any) => {
+  console.log('server got a dope response! ', data)
+
+  socket.emit('foo baby back', { message: 'foo baby to you too!' })
+})
+
+socket.on('foo baby', (data: any) => {
+  console.log('got a foo baby! ', data)
+
+  socket.emit('foo baby back', { message: 'foo baby to you too!' })
+})
+
+
+
 });

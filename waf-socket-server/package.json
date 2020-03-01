@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon -e ts --watch src/index.ts --exec \"npm run clean && npm run compile && npm run pm2:local\"",
+    "logs": "pm2 logs --lines 500",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "jest",
     "test:cov": "jest --coverage",

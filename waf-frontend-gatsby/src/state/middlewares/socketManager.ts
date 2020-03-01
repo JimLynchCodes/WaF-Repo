@@ -5,6 +5,8 @@ import { todosSuccess, todosFailed } from '../actions/todos';
 import { Dispatch } from 'react';
 import { MiddlewareAPI, AnyAction, Action } from 'redux';
 import io from 'socket.io-client';
+
+import { SUBMIT_MANUALLY_ENTERED_ZIPCODE, SUBMIT_UPDATED_LOCATION } from '../types/global-app-properties';
 import { LOGIN_SUCCESS } from '../types/login';
 
 let socket: any = null;
@@ -45,11 +47,20 @@ const socketManager = () => {
 
                 console.log('handling login success and sending payload:', action.payload)
                 // console.log('p: ', payload)
-                // socket.emit(LOGIN_SUCCESS, payload)
                 break;
 
 
+            case SUBMIT_UPDATED_LOCATION:
 
+                console.log('handling SUBMIT_UPDATED_LOCATION sending to server:', action.payload)
+                socket.emit(SUBMIT_UPDATED_LOCATION, action.payload)
+                break;
+
+            case SUBMIT_MANUALLY_ENTERED_ZIPCODE:
+
+                console.log('handling mnanually entered zipcode and sending to server:', action.payload)
+                socket.emit(SUBMIT_MANUALLY_ENTERED_ZIPCODE, action.payload)
+                break;
 
             //     try {
             //       const todosData = await todoService() as ITodosSuccess;
@@ -68,7 +79,7 @@ const socketManager = () => {
 };
 
 export const sendToServer = (event: string, payload: any) => {
-    
+
 }
 
 export default socketManager;

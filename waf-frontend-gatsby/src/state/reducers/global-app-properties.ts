@@ -1,13 +1,19 @@
-import { GLOBAL_APP_PROPERTIES_UPDATED, UPDATING_MANUALLY_EDITING_ZIPCODE } from "../types/global-app-properties";
+import { GLOBAL_APP_PROPERTIES_UPDATED, ACTIVATE_MANUAL_LOCATION_EDIT_MODE } from "../types/global-app-properties";
+
+export interface GeoJSON {
+    type: string,
+    coordinates: number[]
+}
 
 export interface IGlobalAppPropertiesState {
     currentZipcode: number,
-    manuallyEditingZipcode: boolean
+    currentGeolocation: GeoJSON,
+    manuallyEditingLocation: boolean
 }
 
 export const initialState = {
     currentZipcode: 0,
-    manuallyEditingZipcode: false
+    manuallyEditingLocation: false
 };
 
 interface IAction {
@@ -24,8 +30,8 @@ const reducer = (state: IGlobalAppPropertiesState = initialState, action: IActio
         case GLOBAL_APP_PROPERTIES_UPDATED:
             return Object.assign({}, state, payload)
       
-        case UPDATING_MANUALLY_EDITING_ZIPCODE:
-            return Object.assign({}, state, {manuallyEditingZipcode: (payload as boolean)})
+        case ACTIVATE_MANUAL_LOCATION_EDIT_MODE:
+            return Object.assign({}, state, {manuallyEditingLocation: (payload as boolean)})
 
         default:
             return state
