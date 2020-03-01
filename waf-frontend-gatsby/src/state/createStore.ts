@@ -5,12 +5,19 @@ import { createStore, applyMiddleware } from 'redux';
 import todosCustomMiddleware from './middlewares/todosCustomMiddleware';
 import loginCustomMiddleware from './middlewares/loginCustomMiddleware';
 import socketManager from './middlewares/socketManager';
-import { ILoginState } from './reducers/login';
 import { ITodosState } from './reducers/todos';
+import { IConversationsState } from './reducers/conversations';
+import { IListingsState } from './reducers/listings';
+import { IUserState } from './reducers/user';
+import { IGlobalAppPropertiesState } from './reducers/global-app-properties';
 
 export interface IState {
-  loginReducer?: ILoginState,
-  todosReducer?: ITodosState
+  // loginReducer?: ILoginState,
+  todosReducer?: ITodosState,
+  userReducer?: IUserState;
+  globalAppPropertiesReducer?: IGlobalAppPropertiesState;
+  listingsReducer?: IListingsState;
+  conversationsReducer?: IConversationsState;
 }
 
 export default (preloadedState: IState = {}) => {

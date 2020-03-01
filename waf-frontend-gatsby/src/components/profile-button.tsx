@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LilJimProfileImage from './lil-jim-img';
 import { Link } from 'gatsby';
+import { logout } from '../state/actions/login';
 
 const buttonStyle = {
     padding: '5px 10px',
@@ -47,9 +48,10 @@ const ProfileButton = ({ }) => {
                         </div>
                     </Link>
 
-                    <button type="button" style={buttonStyle} onClick={toggleState}>
+                    <button type="button" style={buttonStyle} onClick={(e) => {logout()}}>
                         Logout
                     </button>
+                    
                 </div>
             }
         </>

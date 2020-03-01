@@ -3,6 +3,9 @@ import { Link } from 'gatsby';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import MessageThreadSection from '../components/message-thread-section';
+import { connect } from 'react-redux';
+import { IState } from '../state/createStore';
+import ListingItem from '../components/listing-item';
 
 const someMessageRooms = [{
   createdBy: "Jim",
@@ -14,14 +17,21 @@ const someMessageRooms = [{
 }
 ]
 
-const MessagesPage = () => (
+const MessagesPage = (props: any) => (
   <Layout>
     <SEO title='Messages Page' />
-    <h1>Messages</h1>
+    <h1>Messages (Pulled from Redux)</h1>
     <hr />
     <p></p>
     {/* <p>Welcome to page 2</p>
     <Link to='/'>Go back to the homepage</Link>*/}
+
+    {console.log('proppers: ', props)}
+
+    <ListingItem creator={"You"} messagesRoomsList={props.conversations} />
+    
+
+    {console.log('props: ', props)}
 
 
     <h1>Message Threads From Your Listings</h1>
@@ -39,4 +49,13 @@ const MessagesPage = () => (
   </Layout>
 );
 
-export default MessagesPage;
+const mapStateToProps = (state: IState) => {
+
+  console.log('statey: ', state)
+
+  return {
+    conversations: state.conversationsReducer?.conversations
+  };
+};
+
+export default connect(mapStateToProps)(MessagesPage);
