@@ -25,14 +25,9 @@ const BrowsePage = (props: any) => {
 
   const dispatch = useDispatch()
 
-  type Custom = [string, Dispatch<SetStateAction<string>>]
+  type CustomState = [string, Dispatch<SetStateAction<string>>]
 
-  // interface Custom2 {
-  //   manuallyEnteredZipcodeInputValue: string | number,
-  //   setEnteringZipcodeInputValue: any
-  // }
-
-  const [manuallyEnteredZipcodeInputValue, setEnteringZipcodeInputValue]: Custom = useState('');
+  const [manuallyEnteredZipcodeInputValue, setEnteringZipcodeInputValue]: CustomState = useState('');
 
   const toggleManuallyEnteringZipcodeuser = (newState: boolean) => {
     console.log('dispatching open manual zipcode entry')
@@ -69,121 +64,115 @@ const BrowsePage = (props: any) => {
 
       dispatch(submitUpdatedLocation({
         type: 'Point',
-        coordinates: [position.coords.latitude, position.coords.longitude]
+        coordinates: [latitude, longitude]
       }))
 
-      console.log('yerrp', longitude)
-      console.log('yerrp', latitude)
-      console.log('yerrp', position)
-      // status.textContent = '';
-      // mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-      // mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     }, (error) => {
-      console.log('errr getting location! ', error)
+      console.log('error getting location! ', error)
     })
 
     console.log('use current location clicked ', geo)
-}
+  }
 
+  const countrySelected = (event: any) => {
+    console.log('countrySelected, ', event)
+  }
 
-const countrySelected = (event: any) => {
-  console.log('countrySelected, ', event)
-}
+  return (<>
+    <Layout>
+      <SEO title='Browse Listings' />
+      <h1>Listings Near You</h1>
 
+      <h2>
+        Current location: {props.currentGeolocation}
+      </h2>
 
-
-return (<>
-  <Layout>
-    <SEO title='Browse Listings' />
-    <h1>Listings Near You</h1>
-
-    {/* <h3>{`editing zip: ${props.manuallyEditingLocation}`}</h3> */}
-
-    {/* === Zipcode Not Yet Set === */}
-    {props.currentZipcode || props.currentZipcode === 0 &&
-      <>
-        <p>
-          It looks like there's no location set. We need to know what area we should show you listings near! 😊
+      {/* === Zipcode Not Yet Set === */}
+      {!props.currentGeolocation &&
+        <>
+          <p>
+            [No Geo]
+            <br/>
+            <br/>
+            It looks like there's no location set. We need to know what area we should show you listings near! 😊
           </p>
-      </>
-    }
+        </>
+      }
 
-    {/* === Zipcode Has Been Set === */}
-    {props?.currentZipcode !== 0 &&
-      <>
-        <h3>
-          Showing listings within 25 miles of {props.currentZipcode}.
+      {/* === Zipcode Has Been Set === */}
+      {props.currentGeolocation &&
+        <>
+          <h3>
+            Showing listings within 25 miles of {props.currentZipcode}.
           </h3>
 
+          <h3> Listings from redux:</h3>
+          <ListingItem creator={"You"} messagesRoomsList={props.listings} />
 
-        <h3> Listings from redux:</h3>
-        <ListingItem creator={"You"} messagesRoomsList={props.listings} />
-
-
-      </>
-    }
-
-    {
-      props.manuallyEditingLocation === false &&
-      <>
-        <button onClick={(e) => toggleManuallyEnteringZipcodeuser(true)}>Enter Zipcode</button>
-
-        &nbsp;&nbsp;&nbsp;
-          <button onClick={(e) => useCurrentLocationClicked()}>Use Current Location</button>
-     
-        <br/>
-        <br/>
         </>
-    }
-    {
-      props.manuallyEditingLocation === true &&
-      <>
+      }
 
-        <br />
-        <h2>Change Location</h2>
+      {
+        props.manuallyEditingLocation === false &&
+        <>
+          <button onClick={(e) => toggleManuallyEnteringZipcodeuser(true)}>Enter Zipcode</button>
+
+          &nbsp;&nbsp;&nbsp;
+          <button onClick={(e) => useCurrentLocationClicked()}>Use Current Location</button>
+
+          <br />
+          <br />
+        </>
+      }
+      {
+        props.manuallyEditingLocation === true &&
+        <>
+
+          <br />
+          <h2>Change Location</h2>
 
 
-        <label>Zipcode: </label>
-        <input type="text" value={manuallyEnteredZipcodeInputValue} onChange={(e) => enteringZipcodeInputChange(e)} />
-        <br />
-        <br />
+          <label>Zipcode: </label>
+          <input type="text" value={manuallyEnteredZipcodeInputValue} onChange={(e) => enteringZipcodeInputChange(e)} />
+          <br />
+          <br />
 
-        <label>Country: </label>
-        <select value={manuallyEnteredZipcodeInputValue} onChange={(e) => countrySelected(e)}>
-          <option value="United States">United States</option>
-        </select>
-        <br />
-        <br />
+          <label>Country: </label>
+          <select value={manuallyEnteredZipcodeInputValue} onChange={(e) => countrySelected(e)}>
+            <option value="United States">United States</option>
+          </select>
+          <br />
+          <br />
 
-        <button onClick={(e) => submitManuallyEnteredZipcodeClicked()}>Save</button>
-        &nbsp;&nbsp;&nbsp;
+          <button onClick={(e) => submitManuallyEnteredZipcodeClicked()}>Save</button>
+          &nbsp;&nbsp;&nbsp;
           <button onClick={(e) => toggleManuallyEnteringZipcodeuser(false)}>Cancel</button>
-        <br />
-        <br />
-        {/* 
+          <br />
+          <br />
+          {/* 
               <button>Use Current Location</button>
               <button>Set Zip</button> */}
-      </>
-    }
+        </>
+      }
 
 
-    {/* <ListingItem creator={"You"} messagesRoomsList={someMessageRooms} /> */}
+      {/* <ListingItem creator={"You"} messagesRoomsList={someMessageRooms} /> */}
 
-    {/* <h1>Message Threads From Your Listings</h1>
+      {/* <h1>Message Threads From Your Listings</h1>
     <MessageThreadSection header={"Play Guitar"} creator={"You"} messagesRoomsList={someMessageRooms} />
     <MessageThreadSection header={"Code In Clojure"} creator={"You"} messagesRoomsList={someMessageRooms} />
     <MessageThreadSection header={"Play Tennis"} creator={"You"} messagesRoomsList={someMessageRooms} />
 
     <h1>Message Threads From Other Users' Listings</h1> */}
-    {/* <MessageThreadSection header={"Play Guitar"} creator={"Someone else"} messagesRoomsList={someMessageRooms} />
+      {/* <MessageThreadSection header={"Play Guitar"} creator={"Someone else"} messagesRoomsList={someMessageRooms} />
     <MessageThreadSection header={"Code In Clojure"} creator={"Someone else"} messagesRoomsList={someMessageRooms} />
     <MessageThreadSection header={"Play Tennis"} creator={"Someone else"} messagesRoomsList={someMessageRooms} /> */}
 
-    {/* <p>Welcome to page 2</p> */}
-    {/* <Link to='/'>Go back to the homepage</Link> */}
+      {/* <p>Welcome to page 2</p> */}
+      {/* <Link to='/'>Go back to the homepage</Link> */}
 
-  </Layout>
-</>)
+    </Layout>
+  </>)
 
 }
 

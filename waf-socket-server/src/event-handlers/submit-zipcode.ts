@@ -7,11 +7,13 @@ export const handleSubmitManuallyEnteredZipcode = async (socket: any, data: any)
 export const handleSubmitUpdatedLocation = async (socket: any, data: any) => {
     console.log('handling user submitting updated location... ', data)
 
-    const nearbyListings: any = await getNearbyListings(data.location);
+    const nearbyListings: any = await getNearbyListings(data);
+
+    console.log('got some listings! ', nearbyListings)
     
     socket.emit('NEARBY_LISTINGS', {
         data: {
-            location: data.location,
+            location: data,
             listings: nearbyListings
         }
     });

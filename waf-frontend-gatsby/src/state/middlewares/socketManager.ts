@@ -8,6 +8,7 @@ import io from 'socket.io-client';
 
 import { SUBMIT_MANUALLY_ENTERED_ZIPCODE, SUBMIT_UPDATED_LOCATION } from '../types/global-app-properties';
 import { LOGIN_SUCCESS } from '../types/login';
+import { receivedNearbyListings } from '../actions/listings';
 
 let socket: any = null;
 
@@ -40,6 +41,15 @@ const socketManager = () => {
                 socket.on('disconnect', function () {
                     console.log("disconnected!")
                 });
+
+                socket.on('NEARBY_LISTINGS', (data: any) => {
+                    const location = data.location;
+                    const nearbyListings = data.nearbyListings;
+
+                    console.log('Got response from server!\nLocation is ', location, '\nListings: ', nearbyListings)
+
+                    store.dispatch(receivedNearbyListings(location, nearbyListings));
+                })
 
                 break;
 

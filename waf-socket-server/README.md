@@ -61,6 +61,12 @@ Each environment will have the same set of collections:
 # Local Mongo Setup
 Download the latest [mongoDb with brew](https://github.com/mongodb/homebrew-brew).
 
+To install:
+```
+brew tap mongodb/brew
+brew install mongodb-community@4.2
+```
+
 start mongo with:
 ```
 brew services start mongodb-community
@@ -131,4 +137,7 @@ This project uses the pm2 library, a process manager for node.js projects. It ha
 
 The environment variables are also loaded through pm2 using the `ecosystem.config.js` file. The environment is chosen by passing in the environment for the value of the `--env` flag when running pm2.
 
+create a file called "ecosystem.js", and inside of it put this:
+```
 
+```

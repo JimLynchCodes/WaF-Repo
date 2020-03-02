@@ -7,13 +7,13 @@ export const listingsRequested = () => ({
     type: LISTINGS_REQUESTED,
 });
 
-export const updateListings = (listingsObj: any) => {
-    console.log('dispatching login success...')
-    return {
-        type: UPDATE_LISTINGS,
-        payload: listingsObj,
-    }
-};
+// export const updateListings = (listingsObj: any) => {
+//     console.log('dispatching login success...')
+//     return {
+//         type: UPDATE_LISTINGS,
+//         payload: listingsObj,
+//     }
+// };
 
 export const setManuallyEnteringZipcode = (newState: boolean) => {
     console.log('dispatching login success...')

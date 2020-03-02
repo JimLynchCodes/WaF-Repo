@@ -1,8 +1,8 @@
 import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCESS, LOGOUT } from '../types/login';
-import { LISTINGS_UPDATED } from '../types/listings';
+import { LISTINGS_UPDATED, UPDATED_LISTINGS_RECEIVED } from '../types/listings';
 
 export interface IListingsState {
-  listings: any[] | undefined
+  listings: any[] | undefined,
 }
 
 export const initialState = {
@@ -28,7 +28,12 @@ const reducer = (state: IListingsState = initialState, action: IAction = {}): IL
 
   switch (type) {
     case LISTINGS_UPDATED:
-        return Object.assign({}, state, payload)
+      return Object.assign({}, state, payload)
+
+    case UPDATED_LISTINGS_RECEIVED:
+
+        return {...state, }
+      break;
 
     default:
       return state;
