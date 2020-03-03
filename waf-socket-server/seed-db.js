@@ -9,5 +9,5 @@ db.dropDatabase()
 db.adminCommand('listDatabases')
 
 db.users.save({ userId: "123" })
-db.messages.save({ messageId: "123" })
+db.conversations.save({ conversationId: "123" })
 db.listings.save({ listingId: "123" })

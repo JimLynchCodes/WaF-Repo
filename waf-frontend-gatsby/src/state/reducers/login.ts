@@ -12,7 +12,7 @@ export const initialState = {
   userId: undefined,
 };
 
-interface IAction {
+export interface IAction {
   type?: string;
   payload?: unknown;
 }

@@ -35,7 +35,7 @@ const ActivatableMessageThreadSection = ({ header, messagesRoomsList }: any) => 
                             alignContent: 'space-evenly',
                             flexDirection: 'row'
                         }}>
-                            <Link to="/message-thread">
+                            <Link to="/conversation">
 
                                 <div style={{
                                     padding: '20px',

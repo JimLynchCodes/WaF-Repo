@@ -24,7 +24,7 @@ const ListingItem = ({ header, creator, messagesRoomsList }: any) => {
 
     return (
         <>
-            {
+            {messagesRoomsList.length &&
                 messagesRoomsList.map((room: any, i: number) => {
                     return (
                         <Link to="/listing-details" key={i}>

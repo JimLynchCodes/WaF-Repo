@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 // import styled from 'styled-components/macro';
 import { Form, Formik } from 'formik';
+import { IState } from '../state/createStore';
+import { connect } from 'react-redux';
+import PleaseLoginCard from '../components/please-login-card';
 
 // import { Button, Input } from '@code8-io/ui-component-library';
 
@@ -61,74 +64,102 @@ const fileSelectedHandler = (event: any) => {
     console.log('file selected!', event.target.files[0])
 }
 
-const PostListingForm = ({ onSignIn, error, loading }: any) => {
+const PostListingForm = ({ onSignIn, error, loading, currentGeolocation,
+    currentZipcode, userId }: any) => {
     return (
-        <Formik
-            initialValues={{
-                phone: ''
-            }}
-            onSubmit={onSignIn}
-            render={formikProps => (
-                <Form>
-                    <h3>Core Details</h3><br />
-                    <p>
-                        Activity you want to do:&nbsp;
-                        <input
-                            type="text"
-                            // label="Phone"
-                            // onChange={formikProps.setFieldValue(this, 'phone')}
-                            // value={formikProps.values.phone}
-                            name="phone"
-                            required
-                            disabled={loading}
-                        />
-                    </p>
+        <div>
+            <h3>CurrentGeolocation: {currentGeolocation}</h3>
+            <h3></h3>
+            <h3></h3>
 
-                    <p>
-                        Description:&nbsp;
+            <br />
+            <br />
+
+            <Formik
+                initialValues={{
+                    phone: ''
+                }}
+                onSubmit={onSignIn}
+                render={formikProps => (
+
+                    <Form>
+                        {userId === '' &&
+                            <>
+                                <PleaseLoginCard pleaseText='Please login in order to create listings!' />
+
+                                <br />
+                                <br />
+                                <br />
+                            </>
+                        }
+                        <h3>Core Details</h3><br />
+                        <p>
+                            Activity you want to do:&nbsp;
+                        <input 
+                                type="text"
+                                // label="Phone"
+                                // onChange={formikProps.setFieldValue(this, 'phone')}
+                                // value={formikProps.values.phone}
+                                name="phone"
+                                required
+                                disabled={userId === ''}
+                            />
+                        </p>
+
+                        <br/>
+                        <p>
+                            Description:&nbsp;
                             <textarea
-                            // type="text"
-                            // label="Phone"
-                            // onChange={formikProps.setFieldValue(this, 'phone')}
-                            // value={formikProps.values.phone}
-                            name="phone"
-                            required
-                            disabled={loading}
-                        />
-                    </p>
+                                // type="text"
+                                // label="Phone"
+                                // onChange={formikProps.setFieldValue(this, 'phone')}
+                                // value={formikProps.values.phone}
+                                name="phone"
+                                required
+                                disabled={userId === ''}
+                                rows={4}
+                                cols={30}
+                            />
+                        </p>
 
 
-                    <p>
-                        Image:&nbsp;
+                        <p>
+                            Image:&nbsp;
                         <input
-                            type="file"
-                            // label="Phone"
-                            onChange={fileSelectedHandler}
-                            // value={formikProps.values.phone}
-                            name="phone"
-                            required
-                            disabled={loading}
-                        />
-                    </p>
+                                type="file"
+                                // label="Phone"
+                                onChange={fileSelectedHandler}
+                                // value={formikProps.values.phone}
+                                name="phone"
+                                required
+                                disabled={userId === ''}
+                            />
+                        </p>
 
-                    <h3>Activate This Listing?</h3><br />
-                    <p>
-                        Note: Only active listings are visible to other users! Free accounts can only have 1 active listing at a time!
+                        <br />
+                        <h3>Activate This Listing?</h3><br />
+                        <p>
+                            Only active listings are visible to other users!
 
-                    </p>
-                    <p>
-                        Activate?&nbsp;
-                        <select id="activate?">
-                            <option value="activate">Activate</option>
-                            <option value="don't activate">Don't Activate</option>
-                        </select>
-                    </p>
+                        </p>
+                        <p>
+                            Free accounts can only have 1 active listing at a time!
+                            </p>
 
-                    <p>
-                        <button>
-                            Create Listing!
-                        </button>
-                        {/* type="file"
+                        <p>
+                            Activate?&nbsp;
+                        <select id="activate?" disabled={userId === ''}>
+                                <option value="activate">Activate</option>
+                                <option value="don't activate">Don't Activate</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            <button disabled={userId === ''}>
+                                Create Listing!
+                            </button>
+
+                            {/* type="file"
                             // label="Phone"
                             onChange={fileSelectedHandler}
                             // value={formikProps.values.phone}
@@ -136,16 +167,37 @@ const PostListingForm = ({ onSignIn, error, loading }: any) => {
                             required
                             disabled={loading}
                         /> */}
-                    </p>
+                        </p>
 
+                        {userId === '' &&
+                            <PleaseLoginCard pleaseText='Please login in order to create listings!' />
 
-                    {/* <LoginButton type="submit">Login</LoginButton>
-            </div>
-          </CenteredColumn> */}
-                </Form>
-            )}
-        />
+                        }
+
+                        {/* <LoginButton type="submit">Login</LoginButton>
+                            </div>
+                        </CenteredColumn> */}
+                    </Form>
+                )}
+
+            />
+        </div>
+
     );
+
 };
 
-export default PostListingForm;
+const mapStateToProps = (state: IState) => {
+    return {
+        userId: state.userReducer?.userId,
+
+        currentZipcode: state.userReducer?.zipcode ? state.userReducer?.zipcode :
+            state.globalAppPropertiesReducer?.currentZipcode,
+
+        currentGeolocation: state.userReducer?.geolocation ? state.userReducer?.geolocation :
+            state.globalAppPropertiesReducer?.currentGeolocation,
+
+    };
+};
+
+export default connect(mapStateToProps)(PostListingForm);

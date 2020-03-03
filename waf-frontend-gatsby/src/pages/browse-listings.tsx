@@ -2,7 +2,7 @@ import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Link } from 'gatsby';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import MessageThreadSection from '../components/message-thread-section';
+import MessageThreadSection from '../components/conversation-section';
 import ListingItem from '../components/listing-item';
 import { IListingsState } from '../state/reducers/listings';
 import { connect } from 'react-redux';
@@ -83,17 +83,20 @@ const BrowsePage = (props: any) => {
       <SEO title='Browse Listings' />
       <h1>Listings Near You</h1>
 
-      <h2>
-        Current location: {props.currentGeolocation}
-      </h2>
+
+      {props.currentGeolocation &&
+        <h2>
+          Current location: {props?.currentGeolocation}
+        </h2>
+      }
 
       {/* === Zipcode Not Yet Set === */}
       {!props.currentGeolocation &&
         <>
           <p>
             [No Geo]
-            <br/>
-            <br/>
+            <br />
+            <br />
             It looks like there's no location set. We need to know what area we should show you listings near! 😊
           </p>
         </>
@@ -179,9 +182,15 @@ const BrowsePage = (props: any) => {
 const mapStateToProps = (state: IState) => {
   return {
     listings: state.listingsReducer?.listings,
-    currentZipcode: state.globalAppPropertiesReducer?.currentZipcode,
-    currentGeolocation: state.globalAppPropertiesReducer?.currentGeolocation,
-    manuallyEditingLocation: state.globalAppPropertiesReducer?.manuallyEditingLocation
+    manuallyEditingLocation: state.globalAppPropertiesReducer?.manuallyEditingLocation,
+    userId: state.userReducer?.userId,
+
+    currentZipcode: state.userReducer?.zipcode ? state.userReducer?.zipcode :
+      state.globalAppPropertiesReducer?.currentZipcode,
+    
+    currentGeolocation: state.userReducer?.geolocation ? state.userReducer?.geolocation :
+      state.globalAppPropertiesReducer?.currentGeolocation,
+
   };
 };
 

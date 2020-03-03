@@ -46,7 +46,7 @@ Initial sketch drawings of the pages in the WaF app.
 
 # Data
 
-For each enrivonment, have 1 mongo "database" with three collections to hold users, listings, and messages.
+For each enrivonment, have 1 mongo "database" with three collections to hold users, listings, and conversations.
 
 <img src="./non-src-images/engineering-diagrams/mongo-layout-high-level.png" />
 

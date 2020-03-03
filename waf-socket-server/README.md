@@ -56,7 +56,7 @@ Each environment will have the same set of collections:
 
 - users
 - listings
-- messages
+- conversations
 
 # Local Mongo Setup
 Download the latest [mongoDb with brew](https://github.com/mongodb/homebrew-brew).

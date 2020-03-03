@@ -12,7 +12,7 @@ const buttonStyle = {
 
 const profileImgStyle = { width: '50px', marginBottom: '1rem', borderRadius: '50%', overflow: 'hidden' };
 
-const MessageThreadSection = ({ header, creator, messagesRoomsList }: any) => {
+const MessageThreadSection = (props: any) => {
 
     const [loggedIn, setLoggedIn] = useState(false)
 
@@ -20,16 +20,17 @@ const MessageThreadSection = ({ header, creator, messagesRoomsList }: any) => {
         setLoggedIn(!loggedIn)
     }
 
-    console.log('messagesRoomsList are ', messagesRoomsList)
+    console.log('messagesRoomsList are ', props.messagesRoomsList)
 
     return (
         <>
-            <h2>{header}</h2>
+            <h2>{props.header}</h2>
 
             {
-                messagesRoomsList.map((room: any, i: number) => {
+                props.messagesRoomsList.map((room: any, i: number) => {
                     return (
-                        <Link to="/message-thread" key={i}>
+                        <Link to='/conversation'
+                              state={{conversationId: 123}} key={i}>
 
                             <div style={{
                                 padding: '20px',
@@ -53,7 +54,7 @@ const MessageThreadSection = ({ header, creator, messagesRoomsList }: any) => {
                                 <div>
 
                                     <h4>
-                                        Created by: {creator} on 2/20/2020
+                                        Created by: {props.creator} on 2/20/2020
                                     </h4>
                                 </div>
 

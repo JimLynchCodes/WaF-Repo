@@ -55,7 +55,7 @@ const Layout = ({ children }: { children: any }) => {
       <div style={temporaryNavbarStyles}>
         <NavLinkButton label={"Help"} linkTo={"help"}/>
         <NavLinkButton label={"Post Listing"} linkTo={"post-listing"}/>
-        <NavLinkButton label={"Messages"} linkTo={"messages"}/>
+        <NavLinkButton label={"Conversations"} linkTo={"conversations"}/>
         <NavLinkButton label={"Browse"} linkTo={"browse-listings"}/>
       </div>
       <div
