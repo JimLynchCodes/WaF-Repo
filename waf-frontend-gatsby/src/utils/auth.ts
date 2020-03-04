@@ -1,23 +1,18 @@
 import auth0 from "auth0-js"
 import { navigate } from "gatsby"
-// import { useDispatch } from 'react-redux';
-import { loginSuccess } from "../state/actions/login";
-// const dispatch = useDispatch();
-// import store from './../state/createStore'
-// import { dispatch } from 'redux';
-
+import { loginSuccess, auth0LoginSuccess } from "../state/actions/login";
 import configureStore from "./../state/createStore"
 
 const isBrowser = typeof window !== "undefined"
 
 const auth: any = isBrowser
   ? new auth0.WebAuth({
-      domain: process.env.AUTH0_DOMAIN || "",
-      clientID: process.env.AUTH0_CLIENTID || "",
-      redirectUri: process.env.AUTH0_CALLBACK,
-      responseType: "token id_token",
-      scope: "openid profile email",
-    })
+    domain: process.env.AUTH0_DOMAIN || "",
+    clientID: process.env.AUTH0_CLIENTID || "",
+    redirectUri: process.env.AUTH0_CALLBACK,
+    responseType: "token id_token",
+    scope: "openid profile email",
+  })
   : {}
 
 const tokens: any = {
@@ -44,40 +39,51 @@ export const login = () => {
   auth.authorize()
 }
 
-const setSession = (cb = () => {}) => (err: any, authResult: any) => {
+const setSession = (cb = () => { }) => (err: any, authResult: any) => {
   if (err) {
     navigate("/")
     cb()
     return
   }
 
-  console.log('got auth Result!', authResult)
-  console.log('got auth userId!', authResult.idTokenPayload.sub)
-  console.log('got auth!', authResult.idTokenPayload)
-
-  console.log('identities!', authResult.identities)
+  
+  // console.log('identities!', authResult.identities)
   // console.log('identities!', authResult.identities.length)
   // console.log('identities!', authResult.identities[0])
-
+  
+  
+  
   console.log('dispatching...1')
-  const userObj: any = Object.assign({}, authResult.idTokenPayload, {userId: authResult.idTokenPayload.sub})
-
-  console.log('dispatching...2')
+  const store = configureStore()
+  // console.log('dispatching...3')
+  console.log('dispatching...2', authResult)
   // const ok: any = (store as any)
   
-  const store = configureStore()
-  store.dispatch(loginSuccess(userObj))
-  // console.log('dispatching...3')
-
   if (authResult && authResult.accessToken && authResult.idToken) {
+    const userObj: any = Object.assign({}, authResult.idTokenPayload, { userId: authResult.idTokenPayload.sub })
+    console.log('got auth Result!', authResult)
+    console.log('got auth userId!', authResult.idTokenPayload.sub)
+    console.log('got auth!', authResult.idTokenPayload)
+
+
+    // setTimeout(() => {
+
+      store.dispatch(auth0LoginSuccess(userObj))
+    // }, 2000)
+    
     let expiresAt: number = authResult.expiresIn * 1000 + new Date().getTime()
     tokens.accessToken = authResult.accessToken
     tokens.idToken = authResult.idToken
     tokens.expiresAt = expiresAt
     user = authResult.idTokenPayload
     localStorage.setItem("isLoggedIn", "true")
-    navigate("/account")
+    // navigate("/browse-listings", {state: {user: 'foo'}})
     cb()
+  }
+  else {
+    // navigate("/browse-listings")
+    cb()
+
   }
 }
 
@@ -87,6 +93,8 @@ export const silentAuth = (callback: any) => {
 }
 
 export const handleAuthentication = () => {
+
+  console.log('handling authentication...')
   if (!isBrowser) {
     return
   }

@@ -2,12 +2,12 @@ import { TODOS_REQUESTED } from '../types/todos';
 import { INTIALIZE_SOCKETIO_CONNECTION } from '../types/socketManager';
 import todoService, { ITodosSuccess } from '../../services/todos.service';
 import { todosSuccess, todosFailed } from '../actions/todos';
-import { Dispatch } from 'react';
 import { MiddlewareAPI, AnyAction, Action } from 'redux';
+import { Dispatch } from 'react';
 import io from 'socket.io-client';
 
 import { SUBMIT_MANUALLY_ENTERED_ZIPCODE, SUBMIT_UPDATED_LOCATION } from '../types/global-app-properties';
-import { LOGIN_SUCCESS } from '../types/login';
+import { LOGIN_SUCCESS, AUTH0_LOGIN_SUCCESS } from '../types/login';
 import { receivedNearbyListings } from '../actions/listings';
 
 let socket: any = null;
@@ -53,11 +53,20 @@ const socketManager = () => {
 
                 break;
 
-            case LOGIN_SUCCESS:
+            // case AUTH0_LOGIN_SUCCESS:
 
-                console.log('handling login success and sending payload:', action.payload)
-                // console.log('p: ', payload)
-                break;
+            //     console.log('handling login success and sending payload:', action.payload)
+            //     // console.log('p: ', payload)
+
+            //     const loginPayload = {
+            //         userId: action.payload.sub,
+            //         givenName: action.payload.given_name,
+            //         familyName: action.payload.family_name
+            //     }
+
+            //     console.log('socket is')
+            //     // socket.emit(AUTH0_LOGIN_SUCCESS, loginPayload)
+            //     break;
 
 
             case SUBMIT_UPDATED_LOCATION:

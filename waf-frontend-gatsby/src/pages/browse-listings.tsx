@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { IState } from '../state/createStore';
 import { useDispatch } from 'react-redux';
 import { setManuallyEnteringZipcode, submitManuallyEnteredZipcode, submitUpdatedLocation } from '../state/actions/global-application-properties'
+import { handleAuthentication } from '../utils/auth';
 
 const someMessageRooms = [{
   createdBy: "Jim",
@@ -24,6 +25,10 @@ const someMessageRooms = [{
 const BrowsePage = (props: any) => {
 
   const dispatch = useDispatch()
+
+  handleAuthentication()
+
+  console.log('browse props...' , props)
 
   type CustomState = [string, Dispatch<SetStateAction<string>>]
 

@@ -26,10 +26,10 @@ export default (preloadedState: IState = {}) => {
     getLoadedState(preloadedState),
     composeWithDevTools(
       applyMiddleware(
+        socketManager(),
         save({ states: ['loginReducer'] }),
         todosCustomMiddleware(),
-        loginCustomMiddleware(),
-        socketManager()
+        loginCustomMiddleware()
       )
     ),
 

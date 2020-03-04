@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import LilJimProfileImage from './lil-jim-img';
 import { Link } from 'gatsby';
-import { logout } from '../state/actions/login';
+// import { logout } from '../state/actions/login';
+import { IState } from '../state/createStore';
+import { connect } from 'react-redux';
+import { logout } from '../utils/auth';
 
 const buttonStyle = {
     padding: '5px 10px',
@@ -14,7 +17,7 @@ const buttonStyle = {
 
 const profileImgStyle = { width: '50px', marginBottom: '1rem', borderRadius: '50%', overflow: 'hidden' };
 
-const ProfileButton = ({ }) => {
+const ProfileButton = ({ userId }: any) => {
 
     const [loggedIn, setLoggedIn] = useState(false)
 
@@ -24,6 +27,7 @@ const ProfileButton = ({ }) => {
 
     return (
         <>
+            <h2>userId: {userId}</h2>
             {
                 !loggedIn &&
                 <>
@@ -48,14 +52,24 @@ const ProfileButton = ({ }) => {
                         </div>
                     </Link>
 
-                    <button type="button" style={buttonStyle} onClick={(e) => {logout()}}>
+                    <button type="button" style={buttonStyle} onClick={(e) => { logout() }}>
                         Logout
                     </button>
-                    
+
                 </div>
             }
         </>
     );
 };
 
-export default ProfileButton;
+const mapStateToProps = (state: IState) => {
+
+    console.log('message pagestate: ', state)
+
+    return {
+        userId: state.userReducer?.userId,
+    };
+};
+
+export default connect(mapStateToProps)(ProfileButton);
+

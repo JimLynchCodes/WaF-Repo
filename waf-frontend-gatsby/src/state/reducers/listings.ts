@@ -1,4 +1,4 @@
-import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCESS, LOGOUT } from '../types/login';
+import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCESS, LOGOUT, AUTH0_LOGIN_SUCCESS } from '../types/login';
 import { LISTINGS_UPDATED, UPDATED_LISTINGS_RECEIVED } from '../types/listings';
 
 export interface IListingsState {
@@ -32,7 +32,7 @@ const reducer = (state: IListingsState = initialState, action: IAction = {}): IL
 
     case UPDATED_LISTINGS_RECEIVED:
 
-        return {...state, }
+      return { ...state, }
       break;
 
     default:
