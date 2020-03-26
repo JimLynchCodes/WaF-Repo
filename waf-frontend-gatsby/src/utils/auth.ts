@@ -1,7 +1,9 @@
 import auth0 from "auth0-js"
 import { navigate } from "gatsby"
-import { loginSuccess, auth0LoginSuccess } from "../state/actions/login";
+import { loginSuccess, auth0LoginSuccess, logoutAction } from "../state/actions/login";
 import configureStore from "./../state/createStore"
+
+const store = configureStore()
 
 const isBrowser = typeof window !== "undefined"
 
@@ -54,7 +56,7 @@ const setSession = (cb = () => { }) => (err: any, authResult: any) => {
   
   
   console.log('dispatching...1')
-  const store = configureStore()
+  // const store = configureStore()
   // console.log('dispatching...3')
   console.log('dispatching...2', authResult)
   // const ok: any = (store as any)
@@ -107,6 +109,7 @@ export const getProfile = () => {
 }
 
 export const logout = () => {
+  store.dispatch(logoutAction())
   localStorage.setItem("isLoggedIn", "false")
   auth.logout()
 }

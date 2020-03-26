@@ -1,25 +1,25 @@
 
 import { USER_UPDATED } from '../types/user';
 import { GeoJSON } from './global-app-properties';
-import { AUTH0_LOGIN_SUCCESS } from '../types/login';
+import { AUTH0_LOGIN_SUCCESS, LOGOUT } from '../types/login';
 
 export interface IUserState {
   userId: string | undefined
   zipcode?: number
   geolocation?: GeoJSON,
-  userObjAuth0: any
+  user: any
 }
 
 export const initialState = {
   userId: "",
   zipcode: undefined,
   geolocation: undefined,
-  userObjAuth0: undefined
+  user: undefined
 };
 
 interface IAction {
   type?: string;
-  payload?: unknown;
+  payload?: any;
 }
 
 const reducer = (state: IUserState = initialState, action: IAction = {}): IUserState => {
@@ -31,9 +31,15 @@ const reducer = (state: IUserState = initialState, action: IAction = {}): IUserS
       return Object.assign({}, state, payload)
 
     case AUTH0_LOGIN_SUCCESS:
-
       console.log('handling AUTH0 login success in user reducer! ', action.payload)
-      return { ...state, ...{ user: action.payload }}
+      return { ...state, user: action.payload, ...{ userId: action?.payload?.sub } }
+
+    case LOGOUT:
+      return {
+        ...state,
+        userId: '',
+        user: undefined
+      };
 
     default:
       return state;

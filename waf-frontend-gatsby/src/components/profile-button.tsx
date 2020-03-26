@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LilJimProfileImage from './lil-jim-img';
 import { Link } from 'gatsby';
-// import { logout } from '../state/actions/login';
 import { IState } from '../state/createStore';
 import { connect } from 'react-redux';
 import { logout } from '../utils/auth';
@@ -17,33 +16,27 @@ const buttonStyle = {
 
 const profileImgStyle = { width: '50px', marginBottom: '1rem', borderRadius: '50%', overflow: 'hidden' };
 
-const ProfileButton = ({ userId }: any) => {
-
-    const [loggedIn, setLoggedIn] = useState(false)
-
-    const toggleState = () => {
-        setLoggedIn(!loggedIn)
-    }
+const ProfileButton = (props: any) => {
 
     return (
         <>
-            <h2>userId: {userId}</h2>
+            <h3>userId: {props.userId} {props.userId === '' ? 'nothin' : props.userId}</h3>
             {
-                !loggedIn &&
+                props.userId === '' &&
                 <>
                     <Link to='/account'>
                         <button type="button" style={buttonStyle}>
                             Login
                     </button>
                     </Link>
-                    <button type="button" style={buttonStyle} onClick={toggleState}>
+                    {/* <button type="button" style={buttonStyle} onClick={toggleState}>
                         Fake Login
-                    </button>
+                    </button> */}
                 </>
             }
 
             {
-                loggedIn &&
+                props.userId !== '' &&
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
                     <Link to="/my-profile/">
@@ -63,11 +56,18 @@ const ProfileButton = ({ userId }: any) => {
 };
 
 const mapStateToProps = (state: IState) => {
-
-    console.log('message pagestate: ', state)
-
+    console.log('in profile button: ', state)
+    
     return {
+
         userId: state.userReducer?.userId,
+
+        // currentZipcode: state.userReducer?.zipcode ? state.userReducer?.zipcode :
+        //     state.globalAppPropertiesReducer?.currentZipcode,
+
+        // currentGeolocation: state.userReducer?.geolocation ? state.userReducer?.geolocation :
+        //     state.globalAppPropertiesReducer?.currentGeolocation,
+
     };
 };
 

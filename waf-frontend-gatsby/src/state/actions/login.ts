@@ -31,6 +31,6 @@ export const loginFailed = (error: Error) => ({
   payload: error,
 });
 
-export const logout = () => ({
+export const logoutAction = () => ({
   type: LOGOUT,
 });

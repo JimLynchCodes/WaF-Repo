@@ -26,9 +26,9 @@ const BrowsePage = (props: any) => {
 
   const dispatch = useDispatch()
 
-  handleAuthentication()
-
-  console.log('browse props...' , props)
+  if (props.userId === '') {
+    handleAuthentication()
+  }
 
   type CustomState = [string, Dispatch<SetStateAction<string>>]
 
@@ -185,10 +185,14 @@ const BrowsePage = (props: any) => {
 }
 
 const mapStateToProps = (state: IState) => {
+
+  console.log('new state', state)
   return {
+
+    userId: state.userReducer?.userId,
+
     listings: state.listingsReducer?.listings,
     manuallyEditingLocation: state.globalAppPropertiesReducer?.manuallyEditingLocation,
-    userId: state.userReducer?.userId,
 
     currentZipcode: state.userReducer?.zipcode ? state.userReducer?.zipcode :
       state.globalAppPropertiesReducer?.currentZipcode,

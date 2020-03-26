@@ -12,7 +12,6 @@ import { IUserState } from './reducers/user';
 import { IGlobalAppPropertiesState } from './reducers/global-app-properties';
 
 export interface IState {
-  // loginReducer?: ILoginState,
   todosReducer?: ITodosState,
   userReducer?: IUserState;
   globalAppPropertiesReducer?: IGlobalAppPropertiesState;
@@ -27,7 +26,7 @@ export default (preloadedState: IState = {}) => {
     composeWithDevTools(
       applyMiddleware(
         socketManager(),
-        save({ states: ['loginReducer'] }),
+        save({ states: ['userReducer'] }),
         todosCustomMiddleware(),
         loginCustomMiddleware()
       )
@@ -40,7 +39,7 @@ const getLoadedState = (preloadedState: IState | any) => {
   if (typeof window !== 'undefined')
     return {
       ...preloadedState,
-      ...load({ states: ['loginReducer'], disableWarnings: true }),
+      ...load({ states: ['userReducer'], disableWarnings: true }),
     }
 
   return {
