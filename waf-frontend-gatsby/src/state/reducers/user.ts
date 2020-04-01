@@ -2,6 +2,7 @@
 import { USER_UPDATED } from '../types/user';
 import { GeoJSON } from './global-app-properties';
 import { AUTH0_LOGIN_SUCCESS, LOGOUT } from '../types/login';
+import { UPDATED_LISTINGS_RECEIVED } from '../types/listings';
 
 export interface IUserState {
   userId: string | undefined
@@ -40,6 +41,13 @@ const reducer = (state: IUserState = initialState, action: IAction = {}): IUserS
         userId: '',
         user: undefined
       };
+
+    case UPDATED_LISTINGS_RECEIVED:
+
+
+      console.log('got some listings user ', action)
+      return { ...state}
+      break;
 
     default:
       return state;

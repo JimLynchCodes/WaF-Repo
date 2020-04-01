@@ -44,8 +44,9 @@ const socketManager = () => {
 
                 socket.on('NEARBY_LISTINGS', (data: any) => {
                     const location = data.location;
-                    const nearbyListings = data.nearbyListings;
+                    const nearbyListings = data.listings;
 
+                    console.log('got some ish: ', data)
                     console.log('Got response from server!\nLocation is ', location, '\nListings: ', nearbyListings)
 
                     store.dispatch(receivedNearbyListings(location, nearbyListings));

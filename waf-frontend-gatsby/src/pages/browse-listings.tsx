@@ -1,5 +1,5 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Link } from 'gatsby';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import MessageThreadSection from '../components/conversation-section';
@@ -67,6 +67,8 @@ const BrowsePage = (props: any) => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
 
+      console.log('found location: lat: ', latitude, " long: ", longitude)
+
       dispatch(submitUpdatedLocation({
         type: 'Point',
         coordinates: [latitude, longitude]
@@ -96,7 +98,8 @@ const BrowsePage = (props: any) => {
       }
 
       {/* === Zipcode Not Yet Set === */}
-      {!props.currentGeolocation &&
+      {/* {!props.currentGeolocation && */}
+      {!props.location &&
         <>
           <p>
             [No Geo]
@@ -108,14 +111,20 @@ const BrowsePage = (props: any) => {
       }
 
       {/* === Zipcode Has Been Set === */}
-      {props.currentGeolocation &&
+      {/* {props.currentGeolocation && */}
+      {props.location && 
         <>
           <h3>
             Showing listings within 25 miles of {props.currentZipcode}.
           </h3>
 
           <h3> Listings from redux:</h3>
-          <ListingItem creator={"You"} messagesRoomsList={props.listings} />
+
+          {props.listings.forEach( (listing: any) => (
+
+            <ListingItem creator={listing.creator} descriptiong={listing.description} />
+            )
+          )}
 
         </>
       }
@@ -192,6 +201,7 @@ const mapStateToProps = (state: IState) => {
     userId: state.userReducer?.userId,
 
     listings: state.listingsReducer?.listings,
+    location: state.listingsReducer?.location,
     manuallyEditingLocation: state.globalAppPropertiesReducer?.manuallyEditingLocation,
 
     currentZipcode: state.userReducer?.zipcode ? state.userReducer?.zipcode :

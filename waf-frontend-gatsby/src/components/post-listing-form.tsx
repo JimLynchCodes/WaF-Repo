@@ -66,6 +66,7 @@ const fileSelectedHandler = (event: any) => {
 
 const PostListingForm = (props: any) => {
     return (
+        <>
         <div>
             {/* <h3>Current Location: {currentGeolocation}</h3> */}
             <h3></h3>
@@ -191,6 +192,8 @@ const PostListingForm = (props: any) => {
 
         </div>
 
+
+        </>
     );
 
 };

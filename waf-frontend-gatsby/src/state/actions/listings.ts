@@ -17,8 +17,10 @@ export const receivedNearbyListings = (location: any, listings: any) => {
     console.log('dispatching login success...')
     return {
         type: UPDATED_LISTINGS_RECEIVED,
-        location: location,
-        payload: listings,
+        payload: {
+            location,
+            listings
+        },
     }
 };
 

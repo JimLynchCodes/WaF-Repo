@@ -10,12 +10,10 @@ export const handleSubmitUpdatedLocation = async (socket: any, data: any) => {
     const nearbyListings: any = await getNearbyListings(data);
 
     console.log('got some listings! ', nearbyListings)
-    
+
     socket.emit('NEARBY_LISTINGS', {
-        data: {
-            location: data,
-            listings: nearbyListings
-        }
+        location: data,
+        listings: nearbyListings
     });
 
 }

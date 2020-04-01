@@ -3,23 +3,21 @@ import { LISTINGS_UPDATED, UPDATED_LISTINGS_RECEIVED } from '../types/listings';
 
 export interface IListingsState {
   listings: any[] | undefined,
+  location: any
 }
 
 export const initialState = {
   listings: [{
     createdBy: "Fake User",
     headline: "play guitar"
-  },
-  {
-    createdBy: "Fake User",
-    headline: "go to a dubstep show"
   }
   ],
+  location: undefined
 };
 
 interface IAction {
   type?: string;
-  payload?: unknown;
+  payload?: any;
 }
 
 const reducer = (state: IListingsState = initialState, action: IAction = {}): IListingsState => {
@@ -31,9 +29,12 @@ const reducer = (state: IListingsState = initialState, action: IAction = {}): IL
       return Object.assign({}, state, payload)
 
     case UPDATED_LISTINGS_RECEIVED:
-
-      return { ...state, }
-      break;
+      console.log('got some listings, listings! ', action)
+      return {
+        ...state,
+        listings: action.payload.listings,
+        location: action.payload.location
+      }
 
     default:
       return state;
